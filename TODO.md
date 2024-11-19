@@ -1,13 +1,13 @@
 # TO-DO
 
 - Rooms
- - Gravity
- - Room changing
+  - Gravity
+  - Room changing
 - GameObject implementation
- - Item interaction
- - Health bar
+  - Item interaction
+  - Health bar
 - Timer
 - Menus
- - Title screen
- - Winning screen
- - Best times table
+  - Title screen
+  - Winning screen
+  - Best times table
