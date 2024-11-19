@@ -1,6 +1,7 @@
 package objects;
 
 import pt.iscte.poo.gui.ImageTile;
+import pt.iscte.poo.gui.ImageGUI;
 import pt.iscte.poo.utils.Direction;
 import pt.iscte.poo.utils.Point2D;
 
@@ -10,6 +11,16 @@ public class Manel implements ImageTile {
 
 	public Manel(Point2D initialPosition) {
 		position = initialPosition;
+	}
+	
+	public void setPosition(Point2D position) {
+		this.position = position;
+	}
+	
+	public void updatePosition() {
+	    // Update the graphical position in the GUI
+	    ImageGUI.getInstance().removeImage(this); // Remove the old image from the GUI
+	    ImageGUI.getInstance().addImage(this);   // Add the updated image at the new position
 	}
 
 	@Override
