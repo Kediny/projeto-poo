@@ -7,11 +7,11 @@ import pt.iscte.poo.utils.Point2D;
 public class Manel implements ImageTile {
 
 	private Point2D position;
-
-	public Manel(Point2D initialPosition) {
+	
+	public Manel(Point2D initialPosition){
 		position = initialPosition;
 	}
-
+	
 	@Override
 	public String getName() {
 		return "JumpMan";
@@ -28,10 +28,8 @@ public class Manel implements ImageTile {
 		return 1;
 	}
 
-	// Updated to use a Direction object for movement
-	public void move(Direction dir) {
-		position = position.plus(dir.asVector()); // Updates the position by adding the direction vector
-		System.out.println("Moved to: " + position); // Debugging output for the new position
+	public void move() {
+		position = position.plus(Direction.random().asVector());	
 	}
-
+	
 }
