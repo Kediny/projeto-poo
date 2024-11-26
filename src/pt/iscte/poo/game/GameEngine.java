@@ -7,7 +7,7 @@ import pt.iscte.poo.utils.Direction;
 
 public class GameEngine implements Observer {
 	
-	private Room currentRoom = new Room("room2.txt");
+	private Room currentRoom = new Room("room0.txt");
 	private int lastTickProcessed = 0;
 	
 	public GameEngine() {
@@ -16,7 +16,7 @@ public class GameEngine implements Observer {
 
 	@Override
 	public void update(Observed source) {
-		
+		Room.getInstance().tick();
 		if (ImageGUI.getInstance().wasKeyPressed()) {
 			int k = ImageGUI.getInstance().keyPressed();
 			System.out.println("Keypressed " + k);

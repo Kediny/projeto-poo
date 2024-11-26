@@ -1,9 +1,10 @@
 package pt.iscte.poo.game;
 
 import objects.*;
-import pt.iscte.poo.utils.Direction;
 import pt.iscte.poo.gui.ImageGUI;
+import pt.iscte.poo.utils.Direction;
 import pt.iscte.poo.utils.Point2D;
+import pt.iscte.poo.utils.Vector2D;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -176,6 +177,12 @@ public class Room {
 	public void moveManel(Direction dir) {
 		Point2D currentPosition = manel.getPosition();
 		Point2D futurePosition = Movement.tryMove(currentPosition, dir);
+		
+		// Check if Manel moves onto a door
+	    if (!futurePosition.equals(currentPosition) && isDoor(futurePosition)) {
+	        nextRoom(); // Handle room transition
+	        return; // Exit movement to prevent further updates
+	    }
 
 		// Handle horizontal wrapping at boundaries
 		if (dir == Direction.LEFT && futurePosition.getX() < 0) {
@@ -201,7 +208,11 @@ public class Room {
 
 	// Helper method to determine if a position is walkable
 	public boolean isWalkable(Point2D position) {
-		return isWithinRoom(position) && !isWall(position); // Reuse isWall
+	    return isWithinRoom(position) && !isWall(position) && !isFloor(position);
+	}
+	
+	private boolean isFloor(Point2D position) {
+	    return roomGrid[position.getY()][position.getX()] == 'F'; // Assuming 'F' is floor
 	}
 
 	// Method to check if a given position is a wall ('W') in the room grid
@@ -209,6 +220,53 @@ public class Room {
 		if (!isWithinRoom(position))
 			return false; // Prevent out-of-bounds access
 		return roomGrid[position.getY()][position.getX()] == 'W';
+	}
+	
+	private boolean isStairs(Point2D position) {
+	    if (!isWithinRoom(position)) return false; // Prevent out-of-bounds errors
+	    return roomGrid[position.getY()][position.getX()] == 'S'; // Assuming 'S' is the stairs tile
+	}
+	
+	private boolean isDoor(Point2D position) {
+	    if (!isWithinRoom(position)) return false; // Prevent out-of-bounds access
+	    char tile = roomGrid[position.getY()][position.getX()];
+	    return tile == '0'; // Assuming '0' represents a door
+	}
+
+	
+	public void tick() {
+	    applyGravity(manel); // Apply gravity to the player character
+	}
+
+	private void applyGravity(Manel manel) {
+		Vector2D v = new Vector2D(0,1);
+	    Point2D below = manel.getPosition().plus(v); // Check the position below Manel
+	    if (isStairs(manel.getPosition()) || isStairs(below)) {
+	        return; // Do nothing if on stairs or above stairs
+	    }
+	    if (isWithinRoom(below) && isWalkable(below)) {
+	        manel.setPosition(below); // Move Manel down
+	        manel.updatePosition(); // Update the GUI to reflect the new position
+	    }
+	}
+	
+	private void nextRoom() {
+	    if (nextRoom == null || nextRoom.isEmpty()) {
+	        System.out.println("No next room defined! Transition aborted.");
+	        return;
+	    }
+
+	    System.out.println("Changing to room: " + nextRoom);
+
+	    // Clear the current room from the GUI
+	    ImageGUI.getInstance().clearImages();
+
+	    // Load the new room
+	    loadRoom(nextRoom);
+
+	    // Center Manel in the new room
+	    manel.setPosition(heroStartingPosition);
+	    manel.updatePosition();
 	}
 
 }
