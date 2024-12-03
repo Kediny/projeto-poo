@@ -7,6 +7,7 @@ import pt.iscte.poo.game.Movement;
 
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.Random;
 
 public class DonkeyKong implements ImageTile {
 
@@ -51,12 +52,18 @@ public class DonkeyKong implements ImageTile {
         }
     }
 
-    // Attempt random movement
+    // Attempt random horizontal movement
     private void moveRandomly() {
-        Direction randomDir = Direction.random();
+        Direction randomDir = getRandomHorizontalDirection(); // Get a horizontal direction
         Point2D newPosition = Movement.tryMove(position, randomDir);
         if (!newPosition.equals(position)) { // Only update if a valid move was made
             position = newPosition;
         }
+    }
+
+    // Get a random horizontal direction (LEFT or RIGHT)
+    private Direction getRandomHorizontalDirection() {
+        Direction[] horizontalDirections = {Direction.LEFT, Direction.RIGHT};
+        return horizontalDirections[new Random().nextInt(horizontalDirections.length)];
     }
 }

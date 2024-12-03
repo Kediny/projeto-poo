@@ -133,8 +133,8 @@ public class Room {
 		case 'b':
 			ImageGUI.getInstance().addImage(new Fire(position));
 			break;
-		case 'P': // Added case for Princess
-			ImageGUI.getInstance().addImage(new Princess(position)); // Create Princess object for 'P' tile
+		case 'P':
+			ImageGUI.getInstance().addImage(new Princess(position));
 			break;
 		case 'H':
 			break;
@@ -183,21 +183,6 @@ public class Room {
 	        nextRoom(); // Handle room transition
 	        return; // Exit movement to prevent further updates
 	    }
-
-		// Handle horizontal wrapping at boundaries
-		if (dir == Direction.LEFT && futurePosition.getX() < 0) {
-			// Wrap to the right side of the grid
-			Point2D oppositePosition = new Point2D(MAX_X, currentPosition.getY());
-			if (isWalkable(oppositePosition)) {
-				futurePosition = oppositePosition; // Allow wrapping
-			}
-		} else if (dir == Direction.RIGHT && futurePosition.getX() > MAX_X) {
-			// Wrap to the left side of the grid
-			Point2D oppositePosition = new Point2D(0, currentPosition.getY());
-			if (isWalkable(oppositePosition)) {
-				futurePosition = oppositePosition; // Allow wrapping
-			}
-		}
 
 		// If the position changes, update Manel's position
 		if (!futurePosition.equals(currentPosition)) {
@@ -268,5 +253,7 @@ public class Room {
 	    manel.setPosition(heroStartingPosition);
 	    manel.updatePosition();
 	}
+	
+	
 
 }
