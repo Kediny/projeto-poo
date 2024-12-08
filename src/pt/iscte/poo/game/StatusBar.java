@@ -16,10 +16,15 @@ public class StatusBar {
         }
     }
 
-    public void renderHealth() {
-        // Render the beige background across the status bar
-        for (int x = 0; x < 3; x++) {
-            ImageGUI.getInstance().addImage();
+    public void renderHealthAndLives() {
+        for (int x = 0; x < 4; x++) {
+            if (x < 3) {
+                // If x is within the range of the player's lives, draw a green health unit
+                ImageGUI.getInstance().addImage(new StatusGreen(new Point2D(x, STATUS_BAR_Y)));
+            } else {
+                // Otherwise, draw an "empty" (e.g., gray or red) health unit
+                ImageGUI.getInstance().addImage(new StatusThree(new Point2D(x, STATUS_BAR_Y)));
+            }
         }
     }
 }

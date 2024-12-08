@@ -3,21 +3,21 @@ package objects;
 import pt.iscte.poo.gui.ImageTile;
 import pt.iscte.poo.utils.Point2D;
 
-public class StatusBg implements ImageTile {
+public class StatusGreen implements ImageTile {
     private final Point2D position;
 
-    public StatusBg(Point2D position) {
+    public StatusGreen(Point2D position) {
         this.position = position;
     }
 
     @Override
     public String getName() {
-        return "Beige";
+        return "Green";
     }
 
     @Override
     public int getLayer() {
-        return 0;
+        return 1;
     }
 
     @Override
