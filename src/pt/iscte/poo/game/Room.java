@@ -131,7 +131,7 @@ public class Room {
 			ImageGUI.getInstance().addImage(new GoodMeat(position));
 			break;
 		case 'b':
-			ImageGUI.getInstance().addImage(new Fire(position));
+			ImageGUI.getInstance().addImage(new Bomb(position));
 			break;
 		case 'P':
 			ImageGUI.getInstance().addImage(new Princess(position));
@@ -183,6 +183,12 @@ public class Room {
 	        nextRoom(); // Handle room transition
 	        return; // Exit movement to prevent further updates
 	    }
+	    
+	 // Check if Manel moves onto a trap
+	    if (!futurePosition.equals(currentPosition) && isTrap(futurePosition)) {
+	         // Handle take damage
+	        return; // Exit movement to prevent further updates
+	    }
 
 		// If the position changes, update Manel's position
 		if (!futurePosition.equals(currentPosition)) {
@@ -210,6 +216,12 @@ public class Room {
 	private boolean isStairs(Point2D position) {
 	    if (!isWithinRoom(position)) return false; // Prevent out-of-bounds errors
 	    return roomGrid[position.getY()][position.getX()] == 'S'; // Assuming 'S' is the stairs tile
+	}
+	
+	public boolean isTrap(Point2D position) {
+		if (!isWithinRoom(position))
+			return false; // Prevent out-of-bounds access
+		return roomGrid[position.getY()][position.getX()] == 't';
 	}
 	
 	private boolean isDoor(Point2D position) {
