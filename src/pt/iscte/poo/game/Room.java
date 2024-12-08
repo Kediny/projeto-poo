@@ -116,7 +116,7 @@ public class Room {
 			ImageGUI.getInstance().addImage(new GoodMeat(position));
 			break;
 		case 'b':
-			ImageGUI.getInstance().addImage(new Fire(position));
+			ImageGUI.getInstance().addImage(new Bomb(position));
 			break;
 		case 'P':
 			ImageGUI.getInstance().addImage(new Princess(position));
@@ -159,6 +159,12 @@ public class Room {
 	        nextRoom();
 	        return;
 	    }
+	    
+	 // Check if Manel moves onto a trap
+	    if (!futurePosition.equals(currentPosition) && isTrap(futurePosition)) {
+	         // Handle take damage
+	        return; // Exit movement to prevent further updates
+	    }
 
 		if (!futurePosition.equals(currentPosition)) {
 			manel.setPosition(futurePosition);
@@ -183,6 +189,12 @@ public class Room {
 	private boolean isStairs(Point2D position) {
 	    if (!isWithinRoom(position)) return false;
 	    return roomGrid[position.getY()][position.getX()] == 'S';
+	}
+	
+	public boolean isTrap(Point2D position) {
+		if (!isWithinRoom(position))
+			return false; // Prevent out-of-bounds access
+		return roomGrid[position.getY()][position.getX()] == 't';
 	}
 	
 	private boolean isDoor(Point2D position) {
@@ -222,4 +234,11 @@ public class Room {
 	    manel.setPosition(heroStartingPosition);
 	    manel.updatePosition();
 	}
+<<<<<<< HEAD
 }
+=======
+	
+	
+
+}
+>>>>>>> 09101442ed12f6bda281048305fd8f829566f0ed
