@@ -7,7 +7,7 @@ import pt.iscte.poo.utils.Direction;
 
 public class GameEngine implements Observer {
 	
-	private Room currentRoom = new Room("room0.txt");
+	private Room currentRoom = new Room("room2.txt");
 	private int lastTickProcessed = 0;
 	
 	public GameEngine() {
