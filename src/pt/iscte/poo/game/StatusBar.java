@@ -16,5 +16,10 @@ public class StatusBar {
         }
     }
 
-    
+    public void renderHealth() {
+        // Render the beige background across the status bar
+        for (int x = 0; x < 3; x++) {
+            ImageGUI.getInstance().addImage();
+        }
+    }
 }

@@ -265,7 +265,4 @@ public class Room {
 	    manel.setPosition(heroStartingPosition);
 	    manel.updatePosition();
 	}
-	
-	
-
 }
