@@ -234,11 +234,5 @@ public class Room {
 	    manel.setPosition(heroStartingPosition);
 	    manel.updatePosition();
 	}
-<<<<<<< HEAD
-}
-=======
 	
-	
-
 }
->>>>>>> 09101442ed12f6bda281048305fd8f829566f0ed
