@@ -16,4 +16,7 @@ public class Movement {
         }
         return currentPosition;
     }
+    
+    
+    
 }

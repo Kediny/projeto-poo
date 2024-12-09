@@ -5,7 +5,7 @@ import pt.iscte.poo.gui.ImageGUI;
 import pt.iscte.poo.utils.Direction;
 import pt.iscte.poo.utils.Point2D;
 
-public class Manel implements ImageTile {
+public class Manel implements ImageTile{
 
 	private Point2D position;
 

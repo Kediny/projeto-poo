@@ -8,16 +8,18 @@ import pt.iscte.poo.utils.Vector2D;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Room {
 
 	private static Room instance;
-	private int tickCounter;
 	private Point2D heroStartingPosition;
 	private Manel manel;
 	private String nextRoom = null;
 	private static final int MAX_X = 9;
 	private static final int MAX_Y = 9;
+	private ArrayList<Interactible> interactibles = new ArrayList<Interactible>();
 
 	public static int getMaxX() {
 	    return MAX_X;
@@ -101,13 +103,17 @@ public class Room {
 			ImageGUI.getInstance().addImage(new DoorClosed(position));
 			break;
 		case 'G':
-			ImageGUI.getInstance().addImage(new DonkeyKong(position));
+			DonkeyKong dk = new DonkeyKong(position);
+			ImageGUI.getInstance().addImage(dk);
+			//interactibles.add(dk); IMPLEMENT INTERACTIBLE IN DONKEYKONG CLASS
 			break;
 		case 'S':
 			ImageGUI.getInstance().addImage(new Stairs(position));
 			break;
 		case 's':
-			ImageGUI.getInstance().addImage(new Sword(position));
+			Sword sword = new Sword(position);
+			ImageGUI.getInstance().addImage(sword);
+			interactibles.add(sword);
 			break;
 		case 't':
 			ImageGUI.getInstance().addImage(new Trap(position));
@@ -159,15 +165,16 @@ public class Room {
 	        nextRoom();
 	        return;
 	    }
-	    
-	 // Check if Manel moves onto a trap
-	    if (!futurePosition.equals(currentPosition) && isTrap(futurePosition)) {
-	         // Handle take damage
-	        return; // Exit movement to prevent further updates
-	    }
 
 		if (!futurePosition.equals(currentPosition)) {
 			manel.setPosition(futurePosition);
+			for(Interactible interactible : interactibles) {
+				System.out.println(interactible.toString());
+				if(interactible.hasInteracted(futurePosition)) {
+					System.out.println("Colliding with something");
+					break;
+				}
+			}
 			manel.updatePosition();
 		}
 	}
@@ -193,7 +200,7 @@ public class Room {
 	
 	public boolean isTrap(Point2D position) {
 		if (!isWithinRoom(position))
-			return false; // Prevent out-of-bounds access
+			return false;
 		return roomGrid[position.getY()][position.getX()] == 't';
 	}
 	
@@ -202,12 +209,11 @@ public class Room {
 	    char tile = roomGrid[position.getY()][position.getX()];
 	    return tile == '0';
 	}
+	
+
 
 	public void tick() {
-		tickCounter++;
-		if (tickCounter % 8 == 0) {
-			applyGravity(manel);
-		}
+		applyGravity(manel);
 	}
 
 	private void applyGravity(Manel manel) {
