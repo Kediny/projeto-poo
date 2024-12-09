@@ -2,6 +2,7 @@ package objects;
 
 import pt.iscte.poo.game.Interactible;
 import pt.iscte.poo.game.Player;
+import pt.iscte.poo.gui.ImageGUI;
 import pt.iscte.poo.gui.ImageTile;
 import pt.iscte.poo.utils.Point2D;
 
@@ -31,12 +32,9 @@ public class Bomb implements ImageTile, Interactible {
     }
     
     @Override
-    public boolean hasInteracted(Point2D otherPosition) {
-    	if(this.position == otherPosition) {
-    		player = Player.getInstance();
-    		player.setHasBomb(true);
-    		return true;
-    	}
-    	return false;
+    public void interaction() {
+    	player = Player.getInstance(); 
+    	player.setHasBomb(true);
+    	ImageGUI.getInstance().removeImage(this);
     }
 }

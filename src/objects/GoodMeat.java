@@ -2,6 +2,7 @@ package objects;
 
 import pt.iscte.poo.game.Interactible;
 import pt.iscte.poo.game.Player;
+import pt.iscte.poo.gui.ImageGUI;
 import pt.iscte.poo.gui.ImageTile;
 import pt.iscte.poo.utils.Point2D;
 
@@ -31,12 +32,8 @@ public class GoodMeat implements ImageTile, Interactible {
     }
     
     @Override
-    public boolean hasInteracted(Point2D otherPosition) {
-    	if(this.position == otherPosition) {
-    		player = Player.getInstance();
-    		player.setHasMeat(true);
-    		return true;
-    	}
-    	return false;
+    public void interaction() {
+    	ImageGUI.getInstance().removeImage(this);
+    	player.heal();
     }
 }

@@ -9,6 +9,7 @@ import pt.iscte.poo.utils.Point2D;
 public class Sword implements ImageTile, Interactible {
 	
     private final Point2D position;
+    
     private Player player;
     
     public Sword(Point2D position) {
@@ -36,6 +37,4 @@ public class Sword implements ImageTile, Interactible {
     	player.setHasSword(true);
     	ImageGUI.getInstance().removeImage(this);
     }
-    
-    
 }

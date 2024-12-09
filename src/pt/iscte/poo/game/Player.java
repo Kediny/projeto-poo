@@ -57,7 +57,7 @@ public class Player extends GameObject {
     public void setHasSword(boolean hasSword) {
         this.hasSword = hasSword;
         currentStatus.setDirtyFlag(hasSword);
-        if (hasSword) setAttackPower(2);
+        if (hasSword) setAttackPower();
     }
 
 //	// Overriding interact for player-specific logic
