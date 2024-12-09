@@ -119,10 +119,14 @@ public class Room {
 			ImageGUI.getInstance().addImage(new Trap(position));
 			break;
 		case 'm':
-			ImageGUI.getInstance().addImage(new GoodMeat(position));
+			GoodMeat meat = new GoodMeat(position);
+			ImageGUI.getInstance().addImage(meat);
+			interactibles.add(meat);
 			break;
 		case 'b':
-			ImageGUI.getInstance().addImage(new Bomb(position));
+			Bomb bomb = new Bomb(position);
+			ImageGUI.getInstance().addImage(bomb);
+			interactibles.add(bomb);
 			break;
 		case 'P':
 			ImageGUI.getInstance().addImage(new Princess(position));
@@ -210,8 +214,6 @@ public class Room {
 	    return tile == '0';
 	}
 	
-
-
 	public void tick() {
 		applyGravity(manel);
 	}

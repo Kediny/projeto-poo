@@ -5,6 +5,7 @@ public class Player extends GameObject {
     private int lives = 3;
     private boolean hasSword = false;
     private boolean hasBomb = false;
+    private boolean hasMeat = false;
     
     private Status currentStatus = Status.getInstance();
     
@@ -34,8 +35,18 @@ public class Player extends GameObject {
 
     public void setHasBomb(boolean hasBomb) {
         this.hasBomb = hasBomb;
+        currentStatus.setDirtyFlag(hasBomb);
     }
-
+    
+    public boolean hasMeat() {
+    	return hasMeat;
+    }
+    
+    public void setHasMeat(boolean hasMeat) {
+        this.hasMeat = hasMeat;
+        currentStatus.setDirtyFlag(hasMeat);
+    }
+    
     public boolean hasSword() {
         return hasSword;
     }

@@ -1,11 +1,11 @@
 package pt.iscte.poo.game;
 
+import objects.Manel;
+
 public abstract class GameObject {
 
     private int health = 3;
     private int attackPower = 1;
-
-    public GameObject() {}
 
     public int getHealth() {
         return health;
@@ -23,11 +23,4 @@ public abstract class GameObject {
         return health > 0;
     }
 
-    public void takeDamage(int damage) {
-        this.health =- damage;
-    }
-
-    public void attack(GameObject target) {
-        target.takeDamage(this.attackPower);
-    }
 }

@@ -1,10 +1,15 @@
 package objects;
 
+import pt.iscte.poo.game.Interactible;
+import pt.iscte.poo.game.Player;
 import pt.iscte.poo.gui.ImageTile;
 import pt.iscte.poo.utils.Point2D;
 
-public class GoodMeat implements ImageTile {
-    private final Point2D position;
+public class GoodMeat implements ImageTile, Interactible {
+	
+	private final Point2D position;
+    
+    private Player player;
 
     public GoodMeat(Point2D position) {
         this.position = position;
@@ -23,5 +28,15 @@ public class GoodMeat implements ImageTile {
     @Override
     public Point2D getPosition() {
         return position;
+    }
+    
+    @Override
+    public boolean hasInteracted(Point2D otherPosition) {
+    	if(this.position == otherPosition) {
+    		player = Player.getInstance();
+    		player.setHasMeat(true);
+    		return true;
+    	}
+    	return false;
     }
 }
