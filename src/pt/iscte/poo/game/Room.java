@@ -9,7 +9,6 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 public class Room {
 
@@ -169,9 +168,8 @@ public class Room {
 		if (!futurePosition.equals(currentPosition)) {
 			manel.setPosition(futurePosition);
 			for(Interactible interactible : interactibles) {
-				System.out.println(interactible.toString());
-				if(interactible.hasInteracted(futurePosition)) {
-					System.out.println("Colliding with something");
+				if(interactible.getPosition().equals(futurePosition)) {
+					interactible.interaction();
 					break;
 				}
 			}

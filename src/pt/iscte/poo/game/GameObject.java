@@ -5,8 +5,6 @@ public abstract class GameObject {
     private int health = 3;
     private int attackPower = 1;
 
-    public GameObject() {}
-
     public int getHealth() {
         return health;
     }

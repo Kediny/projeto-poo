@@ -3,6 +3,9 @@ package pt.iscte.poo.game;
 import pt.iscte.poo.utils.Point2D;
 
 public interface Interactible {
+
+	public void interaction();
 	
-	public boolean hasInteracted(Point2D otherPosition);
+	Point2D getPosition();
+	
 }

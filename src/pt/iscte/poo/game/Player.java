@@ -6,18 +6,21 @@ public class Player extends GameObject {
     private boolean hasSword = false;
     private boolean hasBomb = false;
     
-    private Status currentStatus = Status.getInstance();
+    private Status currentStatus;
     
-    public static Player instance;
+    private static Player instance;
 
-    public Player() {
-    	if(instance == null) {
-    		instance = this;
-    	}
-    }
+    private Player() {    }
     
     public static Player getInstance() {
-    	return instance;
+    	if(Player.instance == null) {
+    		Player.instance = new Player();
+    	}
+    	return Player.instance;
+    }
+    
+    public void setCurrentStatus(Status status) {
+    	currentStatus = status.getInstance();
     }
 
     public int getLives() {
@@ -34,6 +37,7 @@ public class Player extends GameObject {
 
     public void setHasBomb(boolean hasBomb) {
         this.hasBomb = hasBomb;
+        currentStatus.setDirtyFlag(hasBomb);
     }
 
     public boolean hasSword() {
@@ -43,6 +47,7 @@ public class Player extends GameObject {
     public void setHasSword(boolean hasSword) {
         this.hasSword = hasSword;
         currentStatus.setDirtyFlag(hasSword);
+        if (hasSword) setAttackPower(2);
     }
 
 //	// Overriding interact for player-specific logic

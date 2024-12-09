@@ -8,20 +8,23 @@ import pt.iscte.poo.utils.Direction;
 public class GameEngine implements Observer {
 	
 	private Room currentRoom = new Room("room0.txt");
-	private Status status = new Status();
-	private int lastTickProcessed = 0;
-	private Player player = new Player();
+	private Status status;
+	Player player = Player.getInstance();
 	
+	private int lastTickProcessed = 0;
 	
 	public GameEngine() {
+		this.status = Status.getInstance();
+		player.setCurrentStatus(status);
 		ImageGUI.getInstance().update();
 		status.setPlayer(player);
-		
 	}
 
 	@Override
 	public void update(Observed source) {
-		if(status.getDirtyFlag()) {status.renderStatus();}
+		if(status.getDirtyFlag()) {
+			status.renderStatus();
+		}
 		Room.getInstance().tick();
 		if (ImageGUI.getInstance().wasKeyPressed()) {
 			int k = ImageGUI.getInstance().keyPressed();
