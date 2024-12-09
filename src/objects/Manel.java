@@ -6,7 +6,11 @@ import pt.iscte.poo.utils.Direction;
 import pt.iscte.poo.utils.Point2D;
 import pt.iscte.poo.game.GameObject;
 
+<<<<<<< HEAD
 public class Manel extends GameObject implements ImageTile {
+=======
+public class Manel extends GameObject implements ImageTile{
+>>>>>>> 3d0e655de751fc0709d653f17d0205ae7e018272
 
 	private Point2D position;
 

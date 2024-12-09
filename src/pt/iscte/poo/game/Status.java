@@ -55,4 +55,12 @@ public class Status {
     
     public void setDirtyFlag(boolean value) {dirtyFlag = value;} 
     
+<<<<<<< HEAD
 }
+=======
+    
+    
+    
+    
+}
+>>>>>>> 3d0e655de751fc0709d653f17d0205ae7e018272
