@@ -28,12 +28,12 @@ public class Status {
     			status += "□";
     		}
     	}
-    	status += "                        Lives: " + player.getLives() + "                        Bomb: [";
+    	status += "                  Lives: " + player.getLives() + "                  Bomb: [";
     	if (player.hasBomb())
     		status += "💣";
     	else
     		status += " ";
-    	status += "]                        Sword: [";
+    	status += "]                  Sword: [";
     	if (player.hasSword())
     		status += "🗡]";
     	else
