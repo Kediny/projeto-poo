@@ -39,16 +39,20 @@ public class Bomb implements ImageTile, Interactible {
     	player = Player.getInstance(); 
     	player.setHasBomb(true);
     	ImageGUI.getInstance().removeImage(this);
+    	Room.getInstance().removeInteractible(this);
     }
 
-    // Decrease the timer and check if it's time to explode
     public boolean tick() {
         timer--;
         if (timer <= 0) {
             explode();
-            return true; // Return true if the bomb should be removed
+            return true;
         }
         return false;
+    }
+    
+    public void removeSelf() {
+    	ImageGUI.getInstance().removeImage(this);
     }
 
     // Bomb explosion logic

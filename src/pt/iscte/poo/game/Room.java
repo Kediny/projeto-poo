@@ -9,6 +9,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class Room {
 
@@ -216,12 +217,12 @@ public class Room {
 	}
 	
 	public void tick() {
-		applyGravity(manel);
+//		applyGravity(manel);
 //		System.out.println("Room tick: " + roomTickCounter);
 		roomTickCounter++;
 	}
 
-	private void applyGravity(Manel manel) {
+	public void applyGravity(Manel manel) {
 		Vector2D v = new Vector2D(0,1);
 	    Point2D below = manel.getPosition().plus(v);
 	    if (isStairs(manel.getPosition()) || isStairs(below)) {
@@ -258,6 +259,12 @@ public class Room {
 		interactibles.add(i);
 	}
 	
+	public void removeInteractible(Interactible i) {
+		interactibles.remove(i);
+	}
 	
+	public Manel getManel() {
+		return manel;
+	}
 
 }
