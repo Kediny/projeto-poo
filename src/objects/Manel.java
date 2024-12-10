@@ -5,6 +5,8 @@ import pt.iscte.poo.gui.ImageGUI;
 import pt.iscte.poo.utils.Direction;
 import pt.iscte.poo.utils.Point2D;
 import pt.iscte.poo.game.GameObject;
+import pt.iscte.poo.game.Player;
+import pt.iscte.poo.game.Room;
 
 public class Manel extends GameObject implements ImageTile {
 
@@ -45,5 +47,17 @@ public class Manel extends GameObject implements ImageTile {
 		position = position.plus(dir.asVector()); // Updates the position by adding the direction vector
 		System.out.println("Moved to: " + position); // Debugging output for the new position
 	}
+	
+	public void placeBomb() {
+	    if (Player.getInstance().hasBomb()) {
+	        Bomb bomb = new Bomb(position); // Create a new Bomb object at the player's position
+
+	        Room.getInstance().addInteractible(bomb); // Add the bomb to the room's objects
+	        ImageGUI.getInstance().addImage(bomb); // Render the bomb in the GUI
+
+	        Player.getInstance().setHasBomb(false); // Remove the bomb from the player's inventory
+	    }
+	}
+
 
 }

@@ -253,4 +253,11 @@ public class Room {
 	public ArrayList<Interactible> getInteractibles() {
 		return interactibles;
 	}
+	
+	public void addInteractible(Interactible i) {
+		interactibles.add(i);
+	}
+	
+	
+
 }

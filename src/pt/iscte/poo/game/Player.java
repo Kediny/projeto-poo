@@ -5,7 +5,6 @@ public class Player extends GameObject {
     private int lives = 3;
     private boolean hasSword = false;
     private boolean hasBomb = false;
-    private boolean hasMeat = false;
     
     private Status currentStatus;
     
@@ -38,16 +37,7 @@ public class Player extends GameObject {
 
     public void setHasBomb(boolean hasBomb) {
         this.hasBomb = hasBomb;
-        currentStatus.setDirtyFlag(hasBomb);
-    }
-    
-    public boolean hasMeat() {
-    	return hasMeat;
-    }
-    
-    public void setHasMeat(boolean hasMeat) {
-        this.hasMeat = hasMeat;
-        currentStatus.setDirtyFlag(hasMeat);
+        currentStatus.setDirtyFlag(true);
     }
     
     public boolean hasSword() {
@@ -56,23 +46,9 @@ public class Player extends GameObject {
 
     public void setHasSword(boolean hasSword) {
         this.hasSword = hasSword;
-        currentStatus.setDirtyFlag(hasSword);
+        currentStatus.setDirtyFlag(true);
         if (hasSword) setAttackPower(2);
     }
-
-//	// Overriding interact for player-specific logic
-//	@Override
-//	public void interact(GameObject other) {
-//		if (other instanceof Enemy) {
-//			this.attack(other); // Example: attack an enemy
-//			if (other.isAlive()) {
-//				this.takeDamage(other.getAttackPower()); // Take counter-attack damage
-//			}
-//		} else if (other instanceof Item) {
-//			// Example: interact with items
-//			((Item) other).applyEffect(this);
-//		}
-//	}
     
     public void heal() {
         setHealth(3);
@@ -89,4 +65,5 @@ public class Player extends GameObject {
             lives--;
         }
     }
+
 }
