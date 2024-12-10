@@ -14,7 +14,6 @@ public class GameEngine implements Observer {
 	private int lastTickProcessed = 0;
 	
 	public GameEngine() {
-		player.setHealth(2);
 		this.status = Status.getInstance();
 		player.setCurrentStatus(status);
 		ImageGUI.getInstance().update();
@@ -44,7 +43,7 @@ public class GameEngine implements Observer {
 	}
 
 	private void processTick() {
-//		System.out.println("Tic Tac : " + lastTickProcessed);
+		System.out.println("Tic Tac : " + lastTickProcessed);
 		lastTickProcessed++;
 	}
 

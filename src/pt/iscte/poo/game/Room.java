@@ -217,7 +217,7 @@ public class Room {
 	
 	public void tick() {
 		applyGravity(manel);
-		System.out.println("Room tick: " + roomTickCounter);
+//		System.out.println("Room tick: " + roomTickCounter);
 		roomTickCounter++;
 	}
 
