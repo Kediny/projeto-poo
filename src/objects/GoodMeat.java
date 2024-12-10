@@ -2,6 +2,7 @@ package objects;
 
 import pt.iscte.poo.game.Interactible;
 import pt.iscte.poo.game.Player;
+import pt.iscte.poo.game.Room;
 import pt.iscte.poo.gui.ImageGUI;
 import pt.iscte.poo.gui.ImageTile;
 import pt.iscte.poo.utils.Point2D;
@@ -33,7 +34,13 @@ public class GoodMeat implements ImageTile, Interactible {
     
     @Override
     public void interaction() {
+    	player = Player.getInstance();
     	ImageGUI.getInstance().removeImage(this);
-    	player.heal();
+    	if (Room.getInstance().getRoomTickCounter() <= 25) {
+    		player.heal();
+    	} else {
+    		player.takeDamageBeef();
+    	}
+    	Room.getInstance().getInteractibles().remove(this);
     }
 }

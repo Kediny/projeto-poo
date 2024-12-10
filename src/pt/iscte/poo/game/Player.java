@@ -57,7 +57,7 @@ public class Player extends GameObject {
     public void setHasSword(boolean hasSword) {
         this.hasSword = hasSword;
         currentStatus.setDirtyFlag(hasSword);
-        if (hasSword) setAttackPower();
+        if (hasSword) setAttackPower(2);
     }
 
 //	// Overriding interact for player-specific logic
@@ -73,7 +73,16 @@ public class Player extends GameObject {
 //			((Item) other).applyEffect(this);
 //		}
 //	}
-
+    
+    public void heal() {
+        setHealth(3);
+        currentStatus.setDirtyFlag(true);
+    }
+    
+    public void takeDamageBeef() {
+    	takeDamage();
+    	currentStatus.setDirtyFlag(true);
+    }
 
     public void loseLife() {
         if (lives > 0) {

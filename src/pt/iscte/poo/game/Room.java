@@ -18,7 +18,8 @@ public class Room {
 	private String nextRoom = null;
 	private static final int MAX_X = 9;
 	private static final int MAX_Y = 9;
-	private ArrayList<Interactible> interactibles = new ArrayList<Interactible>();
+	private ArrayList<Interactible> interactibles;
+	private int roomTickCounter = 0;
 
 	public static int getMaxX() {
 	    return MAX_X;
@@ -46,6 +47,7 @@ public class Room {
 
 	private void loadRoom(String fileName) {
 	    String filePath = "rooms/" + fileName;
+	    interactibles = new ArrayList<Interactible>();
 	    roomGrid = new char[MAX_Y + 1][MAX_X + 1];
 
 	    try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
@@ -68,6 +70,7 @@ public class Room {
 	        heroStartingPosition = findSpawnPoint();
 	        manel = new Manel(heroStartingPosition);
 	        ImageGUI.getInstance().addImage(manel);
+			roomTickCounter = 0;
 
 	    } catch (IOException e) {
 	        e.printStackTrace();
@@ -214,6 +217,8 @@ public class Room {
 	
 	public void tick() {
 		applyGravity(manel);
+		System.out.println("Room tick: " + roomTickCounter);
+		roomTickCounter++;
 	}
 
 	private void applyGravity(Manel manel) {
@@ -241,4 +246,11 @@ public class Room {
 	    manel.updatePosition();
 	}
 	
+	public int getRoomTickCounter() {
+		return roomTickCounter;
+	}
+	
+	public ArrayList<Interactible> getInteractibles() {
+		return interactibles;
+	}
 }

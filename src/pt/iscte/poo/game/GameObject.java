@@ -11,20 +11,27 @@ public abstract class GameObject {
         return health;
     }
     
-    public void heal() {
-        this.health=3;
+    public void setHealth(int health) {
+    	this.health = health;
     }
     
     public int getAttackPower() {
         return attackPower;
     }   
 
-    public void setAttackPower() {
-        this.attackPower = 2;
+    public void setAttackPower(int attackPower) {
+        this.attackPower = attackPower;
     }
 
     public boolean isAlive() {
         return health > 0;
+    }
+    
+    public void takeDamage() {
+    	health--;
+    }
+    public void takeDamage(int dmg) {
+    	health -= dmg;
     }
 
 }
