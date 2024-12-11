@@ -169,32 +169,11 @@ public class Room {
 		return null;
 	}
 
-	public void moveManel(Direction dir) {
-		Point2D currentPosition = manel.getPosition();
-		Point2D futurePosition = Movement.tryMove(currentPosition, dir);
-
-	    if (!futurePosition.equals(currentPosition) && isDoor(futurePosition)) {
-	        nextRoom();
-	        return;
-	    }
-
-		if (!futurePosition.equals(currentPosition)) {
-			manel.setPosition(futurePosition);
-			for(Interactible interactible : interactibles) {
-				if(interactible.getPosition().equals(futurePosition)) {
-					interactible.interaction();
-					break;
-				}
-			}
-			manel.updatePosition();
-		}
-	}
-
 	public boolean isWalkable(Point2D position) {
 	    return isWithinRoom(position) && !isWall(position) && !isFloor(position);
 	}
 	
-	private boolean isFloor(Point2D position) {
+	public boolean isFloor(Point2D position) {
 	    return roomGrid[position.getY()][position.getX()] == 'F';
 	}
 
@@ -204,7 +183,7 @@ public class Room {
 		return roomGrid[position.getY()][position.getX()] == 'W';
 	}
 	
-	private boolean isStairs(Point2D position) {
+	public boolean isStairs(Point2D position) {
 	    if (!isWithinRoom(position)) return false;
 	    return roomGrid[position.getY()][position.getX()] == 'S';
 	}
@@ -215,14 +194,13 @@ public class Room {
 		return roomGrid[position.getY()][position.getX()] == 't';
 	}
 	
-	private boolean isDoor(Point2D position) {
+	public boolean isDoor(Point2D position) {
 	    if (!isWithinRoom(position)) return false;
 	    char tile = roomGrid[position.getY()][position.getX()];
 	    return tile == '0';
 	}
 	
 	public void tick() {
-//		applyGravity(manel);
 		System.out.println("Room tick: " + roomTickCounter);
 		roomTickCounter++;
 		
@@ -241,7 +219,7 @@ public class Room {
 	    }
 	}
 	
-	private void nextRoom() {
+	public void nextRoom() {
 	    if (nextRoom == null || nextRoom.isEmpty()) {
 	        System.out.println("No next room defined! Transition aborted.");
 	        return;

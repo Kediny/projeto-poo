@@ -12,6 +12,7 @@ import pt.iscte.poo.gui.ImageGUI;
 import pt.iscte.poo.gui.ImageTile;
 import pt.iscte.poo.utils.Direction;
 import pt.iscte.poo.utils.Point2D;
+import pt.iscte.poo.utils.Vector2D;
 
 public class Bat implements ImageTile {
 	
@@ -25,7 +26,6 @@ public class Bat implements ImageTile {
         startRandomMovement();
     }
     
- // Start the random movement timer
     private void startRandomMovement() {
         movementTimer = new Timer();
         movementTimer.scheduleAtFixedRate(new TimerTask() {
@@ -33,26 +33,31 @@ public class Bat implements ImageTile {
             public void run() {
                 moveRandomly();
             }
-        }, 0, 500); // Execute immediately and repeat every 500 ms
+        }, 0, 500);
     }
 
-    // Stop the movement timer
     public void stopMovement() {
         if (movementTimer != null) {
             movementTimer.cancel();
         }
     }
 
-    // Attempt random horizontal movement
     private void moveRandomly() {
-        Direction randomDir = getRandomDirection(); // Get a horizontal direction
-        Point2D newPosition = Movement.tryMove(position, randomDir);
-        if (!newPosition.equals(position)) { // Only update if a valid move was made
+    	Point2D below = position.plus(new Vector2D(0,1));
+    	Point2D newPosition;
+    	if (Room.getInstance().isStairs(below)) {
+    		newPosition = Movement.tryMove(position, Direction.DOWN);
+    	} else {
+	        Direction randomDir = getRandomDirection();
+	        newPosition = Movement.tryMove(position, randomDir);
+    	}
+        if (!newPosition.equals(position)) {
             position = newPosition;
+        } else {
+        	moveRandomly();
         }
     }
 
-    // Get a random horizontal direction (LEFT or RIGHT)
     private Direction getRandomDirection() {
         Direction[] directions = {Direction.LEFT, Direction.RIGHT, Direction.UP, Direction.DOWN};
         return directions[new Random().nextInt(directions.length)];

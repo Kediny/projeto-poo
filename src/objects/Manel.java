@@ -38,14 +38,7 @@ public class Manel extends GameObject implements ImageTile {
 
 	@Override
 	public int getLayer() {
-		// TODO Auto-generated method stub
 		return 1;
-	}
-
-	// Updated to use a Direction object for movement
-	public void move(Direction dir) {
-		position = position.plus(dir.asVector()); // Updates the position by adding the direction vector
-		System.out.println("Moved to: " + position); // Debugging output for the new position
 	}
 	
 	public void placeBomb() {

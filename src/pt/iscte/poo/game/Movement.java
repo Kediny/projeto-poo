@@ -17,6 +17,26 @@ public class Movement {
         return currentPosition;
     }
     
-    
+    public static void moveManel(Direction dir) {
+		Point2D currentPosition = Room.getInstance().getManel().getPosition();
+		Point2D futurePosition = Movement.tryMove(currentPosition, dir);
+		Room currentRoom = Room.getInstance();
+
+	    if (!futurePosition.equals(currentPosition) && currentRoom.isDoor(futurePosition)) {
+	        currentRoom.nextRoom();
+	        return;
+	    }
+
+		if (!futurePosition.equals(currentPosition)) {
+			currentRoom.getManel().setPosition(futurePosition);
+			for(Interactible interactible : currentRoom.getInteractibles()) {
+				if(interactible.getPosition().equals(futurePosition)) {
+					interactible.interaction();
+					break;
+				}
+			}
+			currentRoom.getManel().updatePosition();
+		}
+	}
     
 }

@@ -32,7 +32,7 @@ public class GameEngine implements Observer {
 			if (Direction.isDirection(k)) {
 				System.out.println("Direction! ");
 				Direction dir = Direction.directionFor(k);
-				currentRoom.moveManel(dir);
+				Movement.moveManel(dir);
 			} else if (k == 66) {
 				currentRoom.getManel().placeBomb();
 			}
@@ -45,7 +45,7 @@ public class GameEngine implements Observer {
 	}
 
 	private void processTick() {
-		if (lastTickProcessed % 2 == 0) currentRoom.applyGravity(currentRoom.getManel());
+		currentRoom.applyGravity(currentRoom.getManel());
 //		System.out.println("Tic Tac : " + lastTickProcessed);
 		lastTickProcessed++;
 	}
