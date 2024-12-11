@@ -218,8 +218,10 @@ public class Room {
 	
 	public void tick() {
 //		applyGravity(manel);
-//		System.out.println("Room tick: " + roomTickCounter);
+		System.out.println("Room tick: " + roomTickCounter);
 		roomTickCounter++;
+		
+		
 	}
 
 	public void applyGravity(Manel manel) {
@@ -239,7 +241,6 @@ public class Room {
 	        System.out.println("No next room defined! Transition aborted.");
 	        return;
 	    }
-
 	    System.out.println("Changing to room: " + nextRoom);
 	    ImageGUI.getInstance().clearImages();
 	    loadRoom(nextRoom);

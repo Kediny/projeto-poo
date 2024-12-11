@@ -50,12 +50,11 @@ public class Manel extends GameObject implements ImageTile {
 	
 	public void placeBomb() {
 	    if (Player.getInstance().hasBomb()) {
-	        Bomb bomb = new Bomb(position); // Create a new Bomb object at the player's position
-
-	        Room.getInstance().addInteractible(bomb); // Add the bomb to the room's objects
-	        ImageGUI.getInstance().addImage(bomb); // Render the bomb in the GUI
-
-	        Player.getInstance().setHasBomb(false); // Remove the bomb from the player's inventory
+	        Bomb bomb = new Bomb(position);
+	        Room.getInstance().addInteractible(bomb);
+	        ImageGUI.getInstance().addImage(bomb);
+	        bomb.tick();
+	        Player.getInstance().setHasBomb(false);
 	    }
 	}
 

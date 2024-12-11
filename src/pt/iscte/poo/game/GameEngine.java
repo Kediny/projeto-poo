@@ -22,6 +22,7 @@ public class GameEngine implements Observer {
 
 	@Override
 	public void update(Observed source) {
+		Room.getInstance().tick();
 		if(status.getDirtyFlag()) {
 			status.renderStatus();
 		}
@@ -30,8 +31,8 @@ public class GameEngine implements Observer {
 			System.out.println("Keypressed " + k);
 			if (Direction.isDirection(k)) {
 				System.out.println("Direction! ");
-				Direction dir = Direction.directionFor(k); // Convert the key code to a Direction
-				currentRoom.moveManel(dir); // Pass the direction to Room's moveManel method
+				Direction dir = Direction.directionFor(k);
+				currentRoom.moveManel(dir);
 			} else if (k == 66) {
 				currentRoom.getManel().placeBomb();
 			}
@@ -44,8 +45,8 @@ public class GameEngine implements Observer {
 	}
 
 	private void processTick() {
-		currentRoom.applyGravity(currentRoom.getManel());
-		System.out.println("Tic Tac : " + lastTickProcessed);
+		if (lastTickProcessed % 2 == 0) currentRoom.applyGravity(currentRoom.getManel());
+//		System.out.println("Tic Tac : " + lastTickProcessed);
 		lastTickProcessed++;
 	}
 

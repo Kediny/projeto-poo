@@ -55,19 +55,12 @@ public class Bomb implements ImageTile, Interactible {
     	ImageGUI.getInstance().removeImage(this);
     }
 
-    // Bomb explosion logic
     private void explode() {
         Room room = Room.getInstance();
-
         // Damage all objects in the explosion radius
         for (int dx = -EXPLOSION_RADIUS; dx <= EXPLOSION_RADIUS; dx++) {
             for (int dy = -EXPLOSION_RADIUS; dy <= EXPLOSION_RADIUS; dy++) {
-//                Point2D target = position.plus(dx, dy);
-//                GameObject obj = room.getObjectAt(target);
-//
-//                if (obj != null && obj instanceof Damageable) {
-//                    ((Damageable) obj).takeDamage(50); // Example damage value
-//                }
+            	//implement bomb explosion lol
             	System.out.println("Boom!");
             }
         }
