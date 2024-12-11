@@ -2,14 +2,12 @@ package pt.iscte.poo.game;
 
 import objects.*;
 import pt.iscte.poo.gui.ImageGUI;
-import pt.iscte.poo.utils.Direction;
 import pt.iscte.poo.utils.Point2D;
 import pt.iscte.poo.utils.Vector2D;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 public class Room {
 
@@ -20,7 +18,7 @@ public class Room {
 	private static final int MAX_X = 9;
 	private static final int MAX_Y = 9;
 	private ArrayList<Interactible> interactibles;
-	private int roomTickCounter = 1;
+	private int roomTickCounter = 0;
 
 	public static int getMaxX() {
 	    return MAX_X;
@@ -201,10 +199,8 @@ public class Room {
 	}
 	
 	public void tick() {
-		System.out.println("Room tick: " + roomTickCounter);
 		roomTickCounter++;
-		
-		
+		System.out.println("Room tick: " + roomTickCounter);
 	}
 
 	public void applyGravity(Manel manel) {
