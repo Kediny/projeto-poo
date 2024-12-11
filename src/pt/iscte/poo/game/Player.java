@@ -59,6 +59,16 @@ public class Player extends GameObject {
     	takeDamage();
     	currentStatus.setDirtyFlag(true);
     }
+    
+    public void takeDamageTrap() {
+    	takeDamage();
+    	currentStatus.setDirtyFlag(true);
+    }
+    
+    public void takeDamageBat() {
+    	takeDamage();
+    	currentStatus.setDirtyFlag(true);
+    }
 
     public void loseLife() {
         if (lives > 0) {

@@ -110,6 +110,11 @@ public class Room {
 			ImageGUI.getInstance().addImage(dk);
 			//interactibles.add(dk); IMPLEMENT INTERACTIBLE IN DONKEYKONG CLASS
 			break;
+		case 'B':
+			Bat bat = new Bat(position);
+			ImageGUI.getInstance().addImage(bat);
+			//interactibles.add(bat); IMPLEMENT INTERACTIBLE IN BAT CLASS
+			break;
 		case 'S':
 			ImageGUI.getInstance().addImage(new Stairs(position));
 			break;

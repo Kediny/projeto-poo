@@ -1,7 +1,7 @@
 #0;room2.txt
 0 G       
 WWWWWSWWWW
-     S    
+B    S    
  WWWWWWSWW
        S  
 SWWWWWWWWW
