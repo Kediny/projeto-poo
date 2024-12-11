@@ -3,21 +3,21 @@ package objects;
 import pt.iscte.poo.gui.ImageTile;
 import pt.iscte.poo.utils.Point2D;
 
-public class DoorClosed implements ImageTile {
+public class DoorOpen implements ImageTile {
     private final Point2D position;
 
-    public DoorClosed(Point2D position) {
+    public DoorOpen(Point2D position) {
         this.position = position;
     }
 
     @Override
     public String getName() {
-        return "DoorClosed";
+        return "DoorOpen";
     }
 
     @Override
     public int getLayer() {
-        return 0;
+        return 3;
     }
 
     @Override

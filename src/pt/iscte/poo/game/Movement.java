@@ -23,7 +23,7 @@ public class Movement {
 		Room currentRoom = Room.getInstance();
 
 	    if (!futurePosition.equals(currentPosition) && currentRoom.isDoor(futurePosition)) {
-	        currentRoom.nextRoom();
+	        currentRoom.nextRoom(futurePosition);
 	        return;
 	    }
 

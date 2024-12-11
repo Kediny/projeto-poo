@@ -10,7 +10,7 @@ public class Player extends GameObject {
     
     private static Player instance;
 
-    private Player() {    }
+    private Player() {}
     
     public static Player getInstance() {
     	if(Player.instance == null) {

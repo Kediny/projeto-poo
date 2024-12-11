@@ -44,8 +44,11 @@ public class Bat implements ImageTile {
     	if (Room.getInstance().isStairs(below)) {
     		newPosition = Movement.tryMove(position, Direction.DOWN);
     	} else {
-	        Direction randomDir = getRandomDirection();
+    		Direction randomDir = getRandomDirection();
 	        newPosition = Movement.tryMove(position, randomDir);
+	        if (Room.getInstance().isDoor(newPosition)) {
+	    		return;
+	    	}
     	}
         if (!newPosition.equals(position)) {
             position = newPosition;

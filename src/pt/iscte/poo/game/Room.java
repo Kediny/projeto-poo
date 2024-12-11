@@ -215,11 +215,22 @@ public class Room {
 	    }
 	}
 	
-	public void nextRoom() {
+	public void nextRoom(Point2D openDoorPosition) {
+		ImageGUI.getInstance().addImage(new DoorOpen(openDoorPosition));
+
+		ImageGUI.getInstance().update();
+		GameEngine.sleep(500);
+		
+		manel.setPosition(new Point2D(-1,-1));
+		ImageGUI.getInstance().addImage(new Manel(openDoorPosition));
+		
+		ImageGUI.getInstance().update();
+		GameEngine.sleep(1000);
+		
 	    if (nextRoom == null || nextRoom.isEmpty()) {
 	        System.out.println("No next room defined! Transition aborted.");
 	        return;
-	    }
+	    }	    
 	    System.out.println("Changing to room: " + nextRoom);
 	    ImageGUI.getInstance().clearImages();
 	    loadRoom(nextRoom);

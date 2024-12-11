@@ -51,6 +51,12 @@ public class GameEngine implements Observer {
 		currentRoom.applyGravity(currentRoom.getManel());
 	}
 
-
+	public static void sleep(int ms) {
+		try {
+            Thread.sleep(ms);
+        } catch (InterruptedException e) {
+            System.out.println("The sleep was interrupted.");
+        }
+	}
 
 }

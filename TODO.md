@@ -1,5 +1,10 @@
 # TO-DO
 
+change
+- refactor player into manel.java
+- make door open with sprites (done)
+
+new
 - winning screen
 - bombs exploding
 - bats

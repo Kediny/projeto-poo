@@ -4,6 +4,7 @@ import pt.iscte.poo.gui.ImageTile;
 import pt.iscte.poo.utils.Point2D;
 import pt.iscte.poo.utils.Direction;
 import pt.iscte.poo.game.Movement;
+import pt.iscte.poo.game.Room;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -11,7 +12,7 @@ import java.util.Random;
 
 public class DonkeyKong implements ImageTile {
 
-    private Point2D position; // Make mutable for movement
+    private Point2D position;
     private Timer movementTimer;
 
     public DonkeyKong(Point2D position) {
@@ -26,7 +27,7 @@ public class DonkeyKong implements ImageTile {
 
     @Override
     public int getLayer() {
-        return 2; // Foreground layer
+        return 2;
     }
 
     @Override
@@ -34,7 +35,6 @@ public class DonkeyKong implements ImageTile {
         return position;
     }
 
-    // Start the random movement timer
     private void startRandomMovement() {
         movementTimer = new Timer();
         movementTimer.scheduleAtFixedRate(new TimerTask() {
@@ -42,10 +42,9 @@ public class DonkeyKong implements ImageTile {
             public void run() {
                 moveRandomly();
             }
-        }, 0, 500); // Execute immediately and repeat every 500 ms
+        }, 0, 500);
     }
 
-    // Stop the movement timer
     public void stopMovement() {
         if (movementTimer != null) {
             movementTimer.cancel();
@@ -56,7 +55,7 @@ public class DonkeyKong implements ImageTile {
     private void moveRandomly() {
         Direction randomDir = getRandomHorizontalDirection(); // Get a horizontal direction
         Point2D newPosition = Movement.tryMove(position, randomDir);
-        if (!newPosition.equals(position)) { // Only update if a valid move was made
+        if (!newPosition.equals(position) && !Room.getInstance().isDoor(newPosition)) { // Only update if a valid move was made
             position = newPosition;
         }
     }

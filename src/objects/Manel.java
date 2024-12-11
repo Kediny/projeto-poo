@@ -2,7 +2,6 @@ package objects;
 
 import pt.iscte.poo.gui.ImageTile;
 import pt.iscte.poo.gui.ImageGUI;
-import pt.iscte.poo.utils.Direction;
 import pt.iscte.poo.utils.Point2D;
 import pt.iscte.poo.game.GameObject;
 import pt.iscte.poo.game.Player;
@@ -11,6 +10,10 @@ import pt.iscte.poo.game.Room;
 public class Manel extends GameObject implements ImageTile {
 
 	private Point2D position;
+	
+	// stuff from old Player class:
+	
+	
 
 	public Manel(Point2D initialPosition) {
 		position = initialPosition;
@@ -21,7 +24,6 @@ public class Manel extends GameObject implements ImageTile {
 	}
 	
 	public void updatePosition() {
-	    // Update the graphical position in the GUI
 	    ImageGUI.getInstance().removeImage(this); // Remove the old image from the GUI
 	    ImageGUI.getInstance().addImage(this);   // Add the updated image at the new position
 	}
@@ -38,7 +40,7 @@ public class Manel extends GameObject implements ImageTile {
 
 	@Override
 	public int getLayer() {
-		return 1;
+		return 4;
 	}
 	
 	public void placeBomb() {
