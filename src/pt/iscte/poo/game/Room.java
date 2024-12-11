@@ -20,7 +20,7 @@ public class Room {
 	private static final int MAX_X = 9;
 	private static final int MAX_Y = 9;
 	private ArrayList<Interactible> interactibles;
-	private int roomTickCounter = 0;
+	private int roomTickCounter = 1;
 
 	public static int getMaxX() {
 	    return MAX_X;

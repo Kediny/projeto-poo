@@ -22,7 +22,6 @@ public class GameEngine implements Observer {
 
 	@Override
 	public void update(Observed source) {
-		Room.getInstance().tick();
 		if(status.getDirtyFlag()) {
 			status.renderStatus();
 		}
@@ -45,9 +44,11 @@ public class GameEngine implements Observer {
 	}
 
 	private void processTick() {
-		currentRoom.applyGravity(currentRoom.getManel());
-//		System.out.println("Tic Tac : " + lastTickProcessed);
+		Room.getInstance().tick();
 		lastTickProcessed++;
+		System.out.println("Tic Tac : " + lastTickProcessed);
+		
+		currentRoom.applyGravity(currentRoom.getManel());
 	}
 
 
