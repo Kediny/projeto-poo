@@ -19,8 +19,8 @@ public class Player extends GameObject {
     	return Player.instance;
     }
     
-    public void setCurrentStatus(Status status) {
-    	currentStatus = status.getInstance();
+    public void setCurrentStatus() {
+    	currentStatus = Status.getInstance();
     }
 
     public int getLives() {

@@ -15,7 +15,7 @@ public class GameEngine implements Observer {
 	
 	public GameEngine() {
 		this.status = Status.getInstance();
-		player.setCurrentStatus(status);
+		player.setCurrentStatus();
 		ImageGUI.getInstance().update();
 		status.setPlayer(player);
 	}

@@ -1,7 +1,5 @@
 package pt.iscte.poo.game;
 
-import objects.Manel;
-
 public abstract class GameObject {
 
     private int health = 3;
