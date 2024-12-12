@@ -63,6 +63,5 @@ public class Bomb implements ImageTile, Interactible {
             	System.out.println("Boom!");
             }
         }
-        // Render explosion (optional, e.g., change tile to "explosion" for a moment)
     }
 }
