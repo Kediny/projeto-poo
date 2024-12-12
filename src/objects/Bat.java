@@ -55,10 +55,6 @@ public class Bat extends GameObject implements ImageTile, Interactible {
 	    		return;
 	    	}
     	}
-    	if (newPosition.equals(Player.getInstance().getPosition())) {
-        	interaction();
-        	return;
-        }
         if (!newPosition.equals(position)) {
             position = newPosition;
         } else {

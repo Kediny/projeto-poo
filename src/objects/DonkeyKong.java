@@ -53,10 +53,6 @@ public class DonkeyKong extends GameObject implements ImageTile, Interactible {
     private void moveRandomly() {
         Direction randomDir = getRandomHorizontalDirection();
         Point2D newPosition = Movement.tryMove(position, randomDir);
-        if (newPosition.equals(Player.getInstance().getPosition())) {
-        	interaction();
-        	return;
-        }
         if (!newPosition.equals(position) && !Room.getInstance().isDoor(newPosition)) {
             position = newPosition;
         }
