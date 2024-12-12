@@ -2,8 +2,8 @@ package pt.iscte.poo.game;
 
 public abstract class GameObject {
 
-    private int health = 3;
-    private int attackPower = 1;
+    protected int health;
+    protected int attackPower = 1;
 
     public int getHealth() {
         return health;
@@ -25,11 +25,8 @@ public abstract class GameObject {
         return health > 0;
     }
     
-    public void takeDamage() {
-    	health--;
-    }
-    public void takeDamage(int dmg) {
-    	health -= dmg;
+    public void takeDamage(int damage) {
+    	health -= damage;
     }
 
 }

@@ -4,6 +4,7 @@ import pt.iscte.poo.gui.ImageGUI;
 import pt.iscte.poo.observer.Observed;
 import pt.iscte.poo.observer.Observer;
 import pt.iscte.poo.utils.Direction;
+import objects.Player;
 
 public class GameEngine implements Observer {
 	
@@ -31,9 +32,9 @@ public class GameEngine implements Observer {
 			if (Direction.isDirection(k)) {
 				System.out.println("Direction! ");
 				Direction dir = Direction.directionFor(k);
-				Movement.moveManel(dir);
+				Movement.movePlayer(dir);
 			} else if (k == 66) {
-				currentRoom.getManel().placeBomb();
+				currentRoom.getPlayer().placeBomb();
 			}
 		}
 		int t = ImageGUI.getInstance().getTicks();
@@ -47,8 +48,8 @@ public class GameEngine implements Observer {
 		Room.getInstance().tick();
 		lastTickProcessed++;
 		System.out.println("Tic Tac : " + lastTickProcessed);
-		
-		currentRoom.applyGravity(currentRoom.getManel());
+
+		Movement.applyGravity(currentRoom.getPlayer());
 	}
 
 	public static void sleep(int ms) {

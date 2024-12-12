@@ -1,7 +1,9 @@
 package pt.iscte.poo.game;
 
+import objects.Player;
 import pt.iscte.poo.utils.Direction;
 import pt.iscte.poo.utils.Point2D;
+import pt.iscte.poo.utils.Vector2D;
 
 public class Movement {
 
@@ -17,8 +19,8 @@ public class Movement {
         return currentPosition;
     }
     
-    public static void moveManel(Direction dir) {
-		Point2D currentPosition = Room.getInstance().getManel().getPosition();
+    public static void movePlayer(Direction dir) {
+		Point2D currentPosition = Room.getInstance().getPlayer().getPosition();
 		Point2D futurePosition = Movement.tryMove(currentPosition, dir);
 		Room currentRoom = Room.getInstance();
 
@@ -28,15 +30,28 @@ public class Movement {
 	    }
 
 		if (!futurePosition.equals(currentPosition)) {
-			currentRoom.getManel().setPosition(futurePosition);
+			currentRoom.getPlayer().setPosition(futurePosition);
 			for(Interactible interactible : currentRoom.getInteractibles()) {
 				if(interactible.getPosition().equals(futurePosition)) {
 					interactible.interaction();
 					break;
 				}
 			}
-			currentRoom.getManel().updatePosition();
+			currentRoom.getPlayer().update();
 		}
+	}
+    
+    public static void applyGravity(Player player) {
+    	Room room = Room.getInstance();
+		Vector2D v = new Vector2D(0,1);
+	    Point2D below = player.getPosition().plus(v);
+	    if (room.isStairs(player.getPosition()) || room.isStairs(below)) {
+	        return;
+	    }
+	    if (room.isWithinRoom(below) && room.isWalkable(below)) {
+	        player.setPosition(below);
+	        player.update();
+	    }
 	}
     
 }

@@ -2,12 +2,12 @@
 
 change
 - refactor player into manel.java
-- make door open with sprites (done)
+x make door open with sprites
 
 new
 - winning screen
 - bombs exploding
-- bats
+x bats
 - donkey kong fireballs/bananas
 - resetting level when health reaches 0
 - resetting game when lives reach 0

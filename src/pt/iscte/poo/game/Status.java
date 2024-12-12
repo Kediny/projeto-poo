@@ -1,6 +1,7 @@
 package pt.iscte.poo.game;
 
 import pt.iscte.poo.gui.*;
+import objects.Player;
 
 public class Status {
 
@@ -29,18 +30,30 @@ public class Status {
     		}
     	}
     	status += "                  Lives: " + player.getLives() + "                  Bomb: [";
-    	if (player.hasBomb())
+    	if (player.getHasBomb())
     		status += "💣";
     	else
     		status += " ";
     	status += "]                  Sword: [";
-    	if (player.hasSword())
+    	if (player.getHasSword())
     		status += "🗡]";
     	else
     		status += " ]";
     	
     	ImageGUI.getInstance().setStatusMessage(status);
     	dirtyFlag = false;
+    }
+    
+    public void printStatus(String text) {
+    	ImageGUI.getInstance().setStatusMessage(text);
+    	dirtyFlag = true;
+    }
+    
+    public void printKill(String enemy) {
+    	String text = enemy + " was killed!";
+    	printStatus(text);
+    	GameEngine.sleep(250);
+    	dirtyFlag = true;
     }
     
     public Player getPlayer() {

@@ -1,7 +1,6 @@
 package objects;
 
 import pt.iscte.poo.game.Interactible;
-import pt.iscte.poo.game.Player;
 import pt.iscte.poo.game.Room;
 import pt.iscte.poo.gui.ImageGUI;
 import pt.iscte.poo.gui.ImageTile;

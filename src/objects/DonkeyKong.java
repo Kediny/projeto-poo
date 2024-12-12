@@ -1,22 +1,27 @@
 package objects;
 
+import pt.iscte.poo.gui.ImageGUI;
 import pt.iscte.poo.gui.ImageTile;
 import pt.iscte.poo.utils.Point2D;
 import pt.iscte.poo.utils.Direction;
 import pt.iscte.poo.game.Movement;
 import pt.iscte.poo.game.Room;
+import pt.iscte.poo.game.Status;
+import pt.iscte.poo.game.Interactible;
+import pt.iscte.poo.game.GameObject;
 
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.Random;
 
-public class DonkeyKong implements ImageTile {
+public class DonkeyKong extends GameObject implements ImageTile, Interactible {
 
     private Point2D position;
     private Timer movementTimer;
 
     public DonkeyKong(Point2D position) {
         this.position = position;
+        setHealth(3);
         startRandomMovement();
     }
 
@@ -45,24 +50,31 @@ public class DonkeyKong implements ImageTile {
         }, 0, 500);
     }
 
-    public void stopMovement() {
-        if (movementTimer != null) {
-            movementTimer.cancel();
-        }
-    }
-
-    // Attempt random horizontal movement
     private void moveRandomly() {
-        Direction randomDir = getRandomHorizontalDirection(); // Get a horizontal direction
+        Direction randomDir = getRandomHorizontalDirection();
         Point2D newPosition = Movement.tryMove(position, randomDir);
-        if (!newPosition.equals(position) && !Room.getInstance().isDoor(newPosition)) { // Only update if a valid move was made
+        if (!newPosition.equals(position) && !Room.getInstance().isDoor(newPosition)) {
             position = newPosition;
         }
     }
 
-    // Get a random horizontal direction (LEFT or RIGHT)
     private Direction getRandomHorizontalDirection() {
         Direction[] horizontalDirections = {Direction.LEFT, Direction.RIGHT};
         return horizontalDirections[new Random().nextInt(horizontalDirections.length)];
     }
+    
+    @Override
+    public void interaction() {
+    	Player player = Player.getInstance();
+    	if (!player.getHasSword()) {
+    		player.takeDamage(getAttackPower());
+    	}
+    	takeDamage(player.getAttackPower());
+    	if (!isAlive()) {
+	    	ImageGUI.getInstance().removeImage(this);
+			Room.getInstance().getInteractibles().remove(this);
+	    	Status.getInstance().printKill(getName());
+    	}
+    }
+    
 }

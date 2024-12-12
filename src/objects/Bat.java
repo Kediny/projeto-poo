@@ -4,21 +4,25 @@ import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
-
 import pt.iscte.poo.game.Movement;
 import pt.iscte.poo.game.Room;
+import pt.iscte.poo.game.Status;
+import pt.iscte.poo.game.Interactible;
+import pt.iscte.poo.game.GameObject;
 import pt.iscte.poo.gui.ImageTile;
+import pt.iscte.poo.gui.ImageGUI;
 import pt.iscte.poo.utils.Direction;
 import pt.iscte.poo.utils.Point2D;
 import pt.iscte.poo.utils.Vector2D;
 
-public class Bat implements ImageTile {
+public class Bat extends GameObject implements ImageTile, Interactible {
 	
 	private Point2D position;
 	private Timer movementTimer;
 
     public Bat(Point2D position) {
         this.position = position;
+        setHealth(1);
         startRandomMovement();
     }
     
@@ -40,6 +44,7 @@ public class Bat implements ImageTile {
 
     private void moveRandomly() {
     	Point2D below = position.plus(new Vector2D(0,1));
+    	
     	Point2D newPosition;
     	if (Room.getInstance().isStairs(below)) {
     		newPosition = Movement.tryMove(position, Direction.DOWN);
@@ -77,11 +82,14 @@ public class Bat implements ImageTile {
         return position;
     }
     
-//    @Override
-//    public void interaction() {
-//    	player = Player.getInstance();
-//    	ImageGUI.getInstance().removeImage(this);
-//		player.takeDamageBat();
-//		Room.getInstance().getInteractibles().remove(this);
-//    }
+    @Override
+    public void interaction() {
+    	Player player = Player.getInstance();
+    	if (!player.getHasSword())
+    		player.takeDamage(getAttackPower());
+    	ImageGUI.getInstance().removeImage(this);
+    	Status.getInstance().printKill(getName());
+		Room.getInstance().getInteractibles().remove(this);
+    }
+    
 }

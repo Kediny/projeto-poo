@@ -3,7 +3,6 @@ package pt.iscte.poo.game;
 import objects.*;
 import pt.iscte.poo.gui.ImageGUI;
 import pt.iscte.poo.utils.Point2D;
-import pt.iscte.poo.utils.Vector2D;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -13,7 +12,7 @@ public class Room {
 
 	private static Room instance;
 	private Point2D heroStartingPosition;
-	private Manel manel;
+	private Player player;
 	private String nextRoom = null;
 	private static final int MAX_X = 9;
 	private static final int MAX_Y = 9;
@@ -67,8 +66,8 @@ public class Room {
 	        }
 
 	        heroStartingPosition = findSpawnPoint();
-	        manel = new Manel(heroStartingPosition);
-	        ImageGUI.getInstance().addImage(manel);
+	        player = Player.spawn(heroStartingPosition);
+	        ImageGUI.getInstance().addImage(player);
 			roomTickCounter = 0;
 
 	    } catch (IOException e) {
@@ -106,12 +105,12 @@ public class Room {
 		case 'G':
 			DonkeyKong dk = new DonkeyKong(position);
 			ImageGUI.getInstance().addImage(dk);
-			//interactibles.add(dk); IMPLEMENT INTERACTIBLE IN DONKEYKONG CLASS
+			interactibles.add(dk);
 			break;
 		case 'B':
 			Bat bat = new Bat(position);
 			ImageGUI.getInstance().addImage(bat);
-			//interactibles.add(bat); IMPLEMENT INTERACTIBLE IN BAT CLASS
+			interactibles.add(bat);
 			break;
 		case 'S':
 			ImageGUI.getInstance().addImage(new Stairs(position));
@@ -202,40 +201,28 @@ public class Room {
 		roomTickCounter++;
 		System.out.println("Room tick: " + roomTickCounter);
 	}
-
-	public void applyGravity(Manel manel) {
-		Vector2D v = new Vector2D(0,1);
-	    Point2D below = manel.getPosition().plus(v);
-	    if (isStairs(manel.getPosition()) || isStairs(below)) {
-	        return;
-	    }
-	    if (isWithinRoom(below) && isWalkable(below)) {
-	        manel.setPosition(below);
-	        manel.updatePosition();
-	    }
-	}
 	
 	public void nextRoom(Point2D openDoorPosition) {
 		ImageGUI.getInstance().addImage(new DoorOpen(openDoorPosition));
-
 		ImageGUI.getInstance().update();
 		GameEngine.sleep(500);
-		
-		manel.setPosition(new Point2D(-1,-1));
-		ImageGUI.getInstance().addImage(new Manel(openDoorPosition));
-		
+		player.setPosition(openDoorPosition);
+		player.update();
 		ImageGUI.getInstance().update();
-		GameEngine.sleep(1000);
-		
-	    if (nextRoom == null || nextRoom.isEmpty()) {
+		Status.getInstance().printStatus("Entering next room.........");
+		GameEngine.sleep(500);
+		Status.getInstance().printStatus("Entering next room..................");
+		GameEngine.sleep(500);
+		Status.getInstance().printStatus("Entering next room...........................");
+		GameEngine.sleep(500);
+		if (nextRoom == null || nextRoom.isEmpty()) {
 	        System.out.println("No next room defined! Transition aborted.");
 	        return;
-	    }	    
-	    System.out.println("Changing to room: " + nextRoom);
+	    }
 	    ImageGUI.getInstance().clearImages();
 	    loadRoom(nextRoom);
-	    manel.setPosition(heroStartingPosition);
-	    manel.updatePosition();
+	    player.setPosition(heroStartingPosition);
+	    player.update();
 	}
 	
 	public int getRoomTickCounter() {
@@ -254,8 +241,8 @@ public class Room {
 		interactibles.remove(i);
 	}
 	
-	public Manel getManel() {
-		return manel;
+	public Player getPlayer() {
+		return player;
 	}
 
 }

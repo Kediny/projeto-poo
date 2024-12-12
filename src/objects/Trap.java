@@ -1,7 +1,6 @@
 package objects;
 
 import pt.iscte.poo.game.Interactible;
-import pt.iscte.poo.game.Player;
 import pt.iscte.poo.gui.ImageTile;
 import pt.iscte.poo.utils.Point2D;
 
@@ -33,6 +32,7 @@ public class Trap implements ImageTile, Interactible {
     @Override
     public void interaction() {
     	player = Player.getInstance();
-    	player.takeDamageTrap();
+    	player.takeDamage(1);
     }
+    
 }
