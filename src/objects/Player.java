@@ -12,7 +12,8 @@ public class Player extends GameObject implements ImageTile {
 
 	// Attributes
 	private Point2D position;
-	private int lives = 3;
+	private int maxLives = 3;
+	private int lives = maxLives;
 	private int fullHealth = 3;
     private boolean hasSword = false;
     private boolean hasBomb = false;
@@ -37,6 +38,10 @@ public class Player extends GameObject implements ImageTile {
     	}
 		Player.instance.position = initialPosition;
     	return Player.instance;
+    }
+    
+    public static void killInstance() {
+        instance = null;
     }
     
     // Setters and getters
@@ -142,11 +147,17 @@ public class Player extends GameObject implements ImageTile {
 	
 	public void loseGame() {
 		Status.getInstance().printStatus("YOU LOST THE GAME.");
-        GameEngine.sleep(2000);
+        GameEngine.sleep(500);
         Status.getInstance().printStatus("Restarting...");
         GameEngine.sleep(2000);
-        
-        // IMPLEMENT GAME RESTART
+        GameEngine.resetGame();
+	}
+	
+	public void resetPlayer() {
+		lives = maxLives;
+		health = fullHealth;
+		hasSword = false;
+	    hasBomb = false;
 	}
 
 }
