@@ -198,9 +198,16 @@ public class Room {
 	}
 	
 	public void tick() {
-		roomTickCounter++;
-		System.out.println("Room tick: " + roomTickCounter);
+	    roomTickCounter++;
+	    for (Interactible interactible : new ArrayList<>(interactibles)) {  // Cria uma cópia para evitar ConcurrentModificationException
+	        if (interactible instanceof Banana) {
+	            ((Banana) interactible).fall();
+	        }
+	    }
+	    System.out.println("Room tick: " + roomTickCounter);
 	}
+
+
 	
 	public void nextRoom(Point2D openDoorPosition) {
 		ImageGUI.getInstance().addImage(new DoorOpen(openDoorPosition));
