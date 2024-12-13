@@ -52,8 +52,8 @@ public class Status {
     public void printKill(String enemy) {
     	String text = enemy + " was killed!";
     	printStatus(text);
-    	GameEngine.sleep(250);
-    	dirtyFlag = true;
+		GameEngine.sleep(500);
+    	setDirtyFlag(true);
     }
     
     public Player getPlayer() {

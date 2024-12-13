@@ -3,6 +3,7 @@ package objects;
 import pt.iscte.poo.gui.ImageTile;
 import pt.iscte.poo.gui.ImageGUI;
 import pt.iscte.poo.utils.Point2D;
+import pt.iscte.poo.game.GameEngine;
 import pt.iscte.poo.game.GameObject;
 import pt.iscte.poo.game.Room;
 import pt.iscte.poo.game.Status;
@@ -12,6 +13,7 @@ public class Player extends GameObject implements ImageTile {
 	// Attributes
 	private Point2D position;
 	private int lives = 3;
+	private int fullHealth = 3;
     private boolean hasSword = false;
     private boolean hasBomb = false;
     private Status currentStatus;
@@ -19,7 +21,7 @@ public class Player extends GameObject implements ImageTile {
 	
     // Constructors
     private Player() {
-    	setHealth(3);
+    	setHealth(fullHealth);
     }
     
     public static Player getInstance() {
@@ -91,14 +93,31 @@ public class Player extends GameObject implements ImageTile {
     // Functions
     @Override
     public void takeDamage(int damage) {
-    	health -= damage;
+    	if (health >= damage)
+    		health -= damage;
+    	if (health <= 0)
+    		loseLife();
     	currentStatus.setDirtyFlag(true);
     }
 
     public void loseLife() {
-        if (lives > 0) {
+        if (lives > 1) {
             lives--;
+            Status.getInstance().printStatus("You lost a life.........");
+            GameEngine.sleep(500);
+            Status.getInstance().printStatus("You lost a life..................");
+            GameEngine.sleep(500);
+            Status.getInstance().printStatus("You lost a life...........................");
+            GameEngine.sleep(500);
+            Room.getInstance().spawnRoom(Room.getInstance().getCurrentRoom());
+            heal();
+        } else {
+        	loseGame();
         }
+    }
+    
+    public boolean isAlive() {
+    	return lives > 0;
     }
     
 	public void update() {
@@ -117,8 +136,17 @@ public class Player extends GameObject implements ImageTile {
 	}
 	
 	public void heal() {
-        setHealth(3);
+        setHealth(fullHealth);
         currentStatus.setDirtyFlag(true);
     }
+	
+	public void loseGame() {
+		Status.getInstance().printStatus("YOU LOST THE GAME.");
+        GameEngine.sleep(2000);
+        Status.getInstance().printStatus("Restarting...");
+        GameEngine.sleep(2000);
+        
+        // IMPLEMENT GAME RESTART
+	}
 
 }

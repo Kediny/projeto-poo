@@ -35,7 +35,7 @@ public class GoodMeat implements ImageTile, Interactible {
     public void interaction() {
     	player = Player.getInstance();
     	ImageGUI.getInstance().removeImage(this);
-    	if (Room.getInstance().getRoomTickCounter() <= 25) {
+    	if (Room.getInstance().getRoomTickCounter() <= 10) {
     		player.heal();
     	} else {
     		player.takeDamage(1);
