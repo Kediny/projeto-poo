@@ -9,13 +9,19 @@ import pt.iscte.poo.utils.Point2D;
 public class GoodMeat implements ImageTile, Interactible {
 	
 	private final Point2D position;
-    
     private Player player;
 
     public GoodMeat(Point2D position) {
         this.position = position;
     }
-
+    
+    public void updateMeat(){
+    	if (Room.getInstance().getRoomTickCounter() > 5)
+    		Room.getInstance().getInteractibles().remove(this);
+    		
+    		
+    }
+    
     @Override
     public String getName() {
         return "GoodMeat";

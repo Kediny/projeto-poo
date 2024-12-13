@@ -1,0 +1,16 @@
+Enunciado e materiais de suporte à execução do projeto de POO 2024-2025.
+
+Adenda ao enunciado (para todos os novos objetos escolha uma imagem apropriada e uma letra para o mapa):
+
+Bomba: É apanhada pelo herói e largada com a tecla 'b'. Pode ser largada em qualquer posição em que esteja o herói (inclusive a meio das escadas), torna-se intransponível ao ser largada.  Explode 5 tics do relógio depois de largada ou antes isso, se algo que se move (Gorila, Bat ou JumpMan) a "pisar." Ao explodir faz desaparecer todos os objetos num raio de 1 quadrado, exceto as paredes e escadas. Se o JumpMan estiver no raio de explosão perde uma vida.
+Armadilha escondida: parece uma parede, mas quando o herói passa por ela transforma-se numa armadilha.
+Morcego: Aparece no corredor de topo, anda para o lado aleatoriamente, desce escadas sempre que está por cima de umas. Se toca ou é tocado pelo herói dá dano e desaparece.
+Bife: apodrece ao fim de alguns turnos (se o JumpMan não chegar lá a tempo e o comer tira energia em vez de dar energia).
+
+O JumpMan passa a ter 3 vidas, se perder uma vida volta ao inicio do mesmo nível (mas o nível mantém-se no mesmo estado, e.g. se o bife tiver sido consumido, não reaparece), ao perder a 3ª vida volta ao inicio do jogo (faz reset a tudo).
+
+Em relação à leitura do ficheiro deverá haver três níveis de falha, tratados de maneiras diferentes:
+
+Não existe o ficheiro: pede ao utilizador (na consola) para indicar o nome do ficheiro a ler para o próximo nível
+Falta uma linha inteira no ficheiro: aborta o jogo avisando o utilizador da falha e terminando o interface gráfico (use a função dispose() para o efeito).
+Falta um ou mais caracteres numa linha ou encontra um caractere desconhecido: preenche a linha com chão, sem objetos, mas avisa o utilizador da falha sendo tão específico quanto possível em relação a onde se encontra a falha no ficheiro 

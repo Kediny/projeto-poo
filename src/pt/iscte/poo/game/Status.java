@@ -67,6 +67,4 @@ public class Status {
     public boolean getDirtyFlag() {return dirtyFlag;}
     
     public void setDirtyFlag(boolean value) {dirtyFlag = value;} 
-    
-
 }
