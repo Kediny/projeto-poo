@@ -1,7 +1,7 @@
 # TO-DO
 
 change
-- refactor player into manel.java
+x refactor player into manel.java
 x make door open with sprites
 
 new
