@@ -32,14 +32,6 @@ public class Player extends GameObject implements ImageTile {
     	return Player.instance;
     }
     
-    public static Player spawn(Point2D initialPosition) {
-    	if(Player.instance == null) {
-    		Player.instance = new Player();
-    	}
-		Player.instance.position = initialPosition;
-    	return Player.instance;
-    }
-    
     public static void killInstance() {
         instance = null;
     }
@@ -114,8 +106,7 @@ public class Player extends GameObject implements ImageTile {
             GameEngine.sleep(500);
             Status.getInstance().printStatus("You lost a life...........................");
             GameEngine.sleep(500);
-//          TODO implementar se o bife já foi consumido, não dar respawn e 
-            Room.getInstance().spawnRoom(Room.getInstance().getCurrentRoom());
+            Room.getInstance().reloadRoom(Room.getInstance().getCurrentRoom());
             heal();
         } else {
         	loseGame();
@@ -143,12 +134,13 @@ public class Player extends GameObject implements ImageTile {
 	
 	public void heal() {
         setHealth(fullHealth);
+        Status.getInstance().setDirtyFlag(true);
     }
 	
 	public void loseGame() {
-		Status.getInstance().printLost("YOU LOST THE GAME.");
+		Status.getInstance().printStatus("YOU LOST THE GAME.");
         GameEngine.sleep(500);
-        Status.getInstance().printLost("Restarting...");
+        Status.getInstance().printStatus("Restarting...");
         GameEngine.sleep(2000);
         GameEngine.resetGame();
 	}

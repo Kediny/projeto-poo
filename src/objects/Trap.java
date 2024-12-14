@@ -6,6 +6,7 @@ import pt.iscte.poo.game.Status;
 import pt.iscte.poo.gui.ImageGUI;
 import pt.iscte.poo.gui.ImageTile;
 import pt.iscte.poo.utils.Point2D;
+import pt.iscte.poo.game.GameEngine;
 import pt.iscte.poo.game.GameObject;
 
 
@@ -37,6 +38,7 @@ public class Trap extends GameObject implements ImageTile, Interactible {
 		Status.getInstance().setDirtyFlag(false);
     	Player player = Player.getInstance();
     	player.takeDamage(1);
+    	GameEngine.sleep(1000);
 		Status.getInstance().setDirtyFlag(true);
 
     }
