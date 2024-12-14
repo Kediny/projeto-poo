@@ -28,5 +28,4 @@ public abstract class GameObject {
     public void takeDamage(int damage) {
     	health -= damage;
     }
-
 }

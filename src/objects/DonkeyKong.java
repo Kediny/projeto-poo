@@ -19,7 +19,7 @@ public class DonkeyKong extends GameObject implements ImageTile, Interactible {
 
     private Point2D position;
     private Timer movementTimer;
-
+    
     public DonkeyKong(Point2D position) {
         this.position = position;
         setHealth(3);
@@ -48,7 +48,7 @@ public class DonkeyKong extends GameObject implements ImageTile, Interactible {
             public void run() {
                 moveRandomly();
             }
-        }, 0, 500);
+        }, 0, 500);  // Random movement every half-second (can adjust for your game speed)
     }
     
     public void stopMovement() {
