@@ -1,16 +1,18 @@
 # TO-DO
 
-change
-x refactor player into manel.java
-x make door open with sprites
-
 new
+- adding damage when enemies bump into hero
 - winning screen
 - bombs exploding
-x bats
 - donkey kong fireballs/bananas
-x resetting level when health reaches 0
-x resetting game when lives reach 0
 - timer + high scores
 - winning screen
-- clashing between hero and enemies
+
+
+done
+
+x resetting level when health reaches 0
+x resetting game when lives reach 0
+x bats
+x refactor player into manel.java
+x make door open with sprites

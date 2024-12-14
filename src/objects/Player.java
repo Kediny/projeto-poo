@@ -14,7 +14,7 @@ public class Player extends GameObject implements ImageTile {
 	private Point2D position;
 	private int maxLives = 3;
 	private int lives = maxLives;
-	private int fullHealth = 3;
+	private int fullHealth = 1;
     private boolean hasSword = false;
     private boolean hasBomb = false;
     private Status currentStatus;
@@ -142,7 +142,6 @@ public class Player extends GameObject implements ImageTile {
 	
 	public void heal() {
         setHealth(fullHealth);
-        currentStatus.setDirtyFlag(true);
     }
 	
 	public void loseGame() {

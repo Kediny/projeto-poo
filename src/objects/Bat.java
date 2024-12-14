@@ -44,18 +44,17 @@ public class Bat extends GameObject implements ImageTile, Interactible {
 
     private void moveRandomly() {
     	Point2D below = position.plus(new Vector2D(0,1));
-    	
     	Point2D newPosition;
     	if (Room.getInstance().isStairs(below)) {
     		newPosition = Movement.tryMove(position, Direction.DOWN);
     	} else {
     		Direction randomDir = getRandomDirection();
 	        newPosition = Movement.tryMove(position, randomDir);
-	        if (Room.getInstance().isDoor(newPosition)) {
-	    		return;
-	    	}
     	}
-        if (!newPosition.equals(position)) {
+    	if (Player.getInstance().getPosition() != null && Player.getInstance().getPosition().equals(newPosition)) {
+    		this.interaction();
+    	}
+        if (!Room.getInstance().isDoor(newPosition) && !newPosition.equals(position)) {
             position = newPosition;
         } else {
         	moveRandomly();

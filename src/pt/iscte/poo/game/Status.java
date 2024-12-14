@@ -67,5 +67,14 @@ public class Status {
     
     public boolean getDirtyFlag() {return dirtyFlag;}
     
-    public void setDirtyFlag(boolean value) {dirtyFlag = value;} 
+    public void setDirtyFlag(boolean value) {
+    	if (dirtyFlag != value) {
+            dirtyFlag = value;
+        }
+    	String currentFunctionName = new Object(){}.getClass().getEnclosingMethod().getName();
+    	StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
+    	String callingFunctionName = stackTrace[2].getMethodName();
+    	String ccallingFunctionName = stackTrace[3].getMethodName();
+    	System.out.println(currentFunctionName + " <- " + callingFunctionName + " <- " + ccallingFunctionName + "\n");
+    } 
 }

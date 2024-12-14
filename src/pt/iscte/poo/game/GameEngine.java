@@ -41,14 +41,11 @@ public class GameEngine implements Observer {
 
 	@Override
 	public void update(Observed source) {
-		if(status.getDirtyFlag()) {
-			status.renderStatus();
-		}
 		if (ImageGUI.getInstance().wasKeyPressed()) {
 			int k = ImageGUI.getInstance().keyPressed();
-			System.out.println("Keypressed " + k);
+//			System.out.println("Keypressed " + k);
 			if (Direction.isDirection(k)) {
-				System.out.println("Direction! ");
+//				System.out.println("Direction! ");
 				Direction dir = Direction.directionFor(k);
 				Movement.movePlayer(dir);
 			} else if (k == 66) {
@@ -60,6 +57,9 @@ public class GameEngine implements Observer {
 			processTick();
 		}
 		ImageGUI.getInstance().update();
+		if(status.getDirtyFlag()) {
+			status.renderStatus();
+		}
 	}
 
 	private void processTick() {

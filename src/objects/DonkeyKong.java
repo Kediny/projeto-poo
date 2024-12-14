@@ -8,6 +8,7 @@ import pt.iscte.poo.game.Movement;
 import pt.iscte.poo.game.Room;
 import pt.iscte.poo.game.Status;
 import pt.iscte.poo.game.Interactible;
+import pt.iscte.poo.game.GameEngine;
 import pt.iscte.poo.game.GameObject;
 
 import java.util.Timer;
@@ -49,10 +50,21 @@ public class DonkeyKong extends GameObject implements ImageTile, Interactible {
             }
         }, 0, 500);
     }
+    
+    public void stopMovement() {
+        if (movementTimer != null) {
+            movementTimer.cancel();
+            movementTimer = null;
+        }
+    }
+
 
     private void moveRandomly() {
         Direction randomDir = getRandomHorizontalDirection();
         Point2D newPosition = Movement.tryMove(position, randomDir);
+    	if (Player.getInstance().getPosition() != null && Player.getInstance().getPosition().equals(newPosition)) {
+    		this.interaction();
+    	}
         if (!newPosition.equals(position) && !Room.getInstance().isDoor(newPosition)) {
             position = newPosition;
         }
@@ -68,6 +80,7 @@ public class DonkeyKong extends GameObject implements ImageTile, Interactible {
     	Player player = Player.getInstance();
     	takeDamage(player.getAttackPower());
     	if (!isAlive()) {
+    		stopMovement();
 	    	ImageGUI.getInstance().removeImage(this);
 			Room.getInstance().getInteractibles().remove(this);
 	    	Status.getInstance().printKill(getName());
