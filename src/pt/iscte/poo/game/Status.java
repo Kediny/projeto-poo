@@ -7,9 +7,10 @@ public class Status {
 
 	private static Status instance;
 	private Player player;
-	private boolean dirtyFlag = true;
+	private boolean dirtyFlag;
 
     private Status() {
+    	dirtyFlag = true;
     	this.player = Player.getInstance();
     }
     
@@ -60,8 +61,8 @@ public class Status {
     	return this.player;
     }
     
-    public void setPlayer(Player player) {
-    	this.player = player;
+    public void setPlayer() {
+    	this.player = Player.getInstance();
     }
     
     public boolean getDirtyFlag() {return dirtyFlag;}

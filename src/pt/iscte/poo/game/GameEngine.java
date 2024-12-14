@@ -8,18 +8,36 @@ import objects.Player;
 
 public class GameEngine implements Observer {
 	
-	private Room currentRoom = new Room("room0.txt");
+	private Room currentRoom;
 	private Status status;
-	Player player = Player.getInstance();
+	private Player player;
+	private static GameEngine instance;
 	
 	private int lastTickProcessed = 0;
 	
-	public GameEngine() {
-		this.status = Status.getInstance();
+	private GameEngine() {
+		currentRoom = Room.getInstance();
+		player = Player.getInstance();
+		status = Status.getInstance();
 		player.setCurrentStatus();
+		status.setPlayer();
 		ImageGUI.getInstance().update();
-		status.setPlayer(player);
 	}
+	
+	public static GameEngine getInstance() {
+        if (instance == null) {
+            instance = new GameEngine();
+        }
+        return instance;
+    }
+	
+	public static void resetGame() {
+		Player.getInstance().resetPlayer();
+		ImageGUI.getInstance().clearImages();
+		Room.killInstance();
+		Room.getInstance();
+		Status.getInstance().setDirtyFlag(true);
+    }
 
 	@Override
 	public void update(Observed source) {
@@ -47,8 +65,7 @@ public class GameEngine implements Observer {
 	private void processTick() {
 		Room.getInstance().tick();
 		lastTickProcessed++;
-		System.out.println("Tic Tac : " + lastTickProcessed);
-
+//		System.out.println("Tic Tac : " + lastTickProcessed);
 		Movement.applyGravity(currentRoom.getPlayer());
 	}
 

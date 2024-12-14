@@ -30,26 +30,32 @@ public class Room {
 
 	private char[][] roomGrid;
 
-	public Room(String roomFileName) {
+	private Room(String roomFileName) {
 		instance = this;
 		loadRoom(roomFileName);
 	}
 
-	public Room() {
+	private Room() {
 		instance = this;
 		loadRoom("room0.txt");
 	}
 
 	public static Room getInstance() {
-		return instance;
+		if (Room.instance == null) {
+    		Room.instance = new Room();
+    	}
+		return Room.instance;
 	}
+	
+	public static void killInstance() {
+        Room.instance = null;
+    }
 
 	public void loadRoom(String fileName) {
 		currentRoom = fileName;
-	    String filePath = "rooms/" + fileName;
+		String filePath = "rooms/" + fileName;
 	    interactibles = new ArrayList<Interactible>();
 	    roomGrid = new char[MAX_Y + 1][MAX_X + 1];
-
 	    try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
 	        String line;
 	        int row = 0;
@@ -66,7 +72,7 @@ public class Room {
 	            processLine(line, row++);
 	            line = reader.readLine();
 	        }
-
+	        
 	        heroStartingPosition = findSpawnPoint();
 	        player = Player.spawn(heroStartingPosition);
 	        ImageGUI.getInstance().addImage(player);
@@ -98,50 +104,50 @@ public class Room {
 
 	private void createObjectFromTile(char tile, Point2D position) {
 		switch (tile) {
-		case 'W':
-			ImageGUI.getInstance().addImage(new Wall(position));
-			break;
-		case '0':
-			ImageGUI.getInstance().addImage(new DoorClosed(position));
-			break;
-		case 'G':
-			DonkeyKong dk = new DonkeyKong(position);
-			ImageGUI.getInstance().addImage(dk);
-			interactibles.add(dk);
-			break;
-		case 'B':
-			Bat bat = new Bat(position);
-			ImageGUI.getInstance().addImage(bat);
-			interactibles.add(bat);
-			break;
-		case 'S':
-			ImageGUI.getInstance().addImage(new Stairs(position));
-			break;
-		case 's':
-			Sword sword = new Sword(position);
-			ImageGUI.getInstance().addImage(sword);
-			interactibles.add(sword);
-			break;
-		case 't':
-			ImageGUI.getInstance().addImage(new Trap(position));
-			break;
-		case 'm':
-			GoodMeat meat = new GoodMeat(position);
-			ImageGUI.getInstance().addImage(meat);
-			interactibles.add(meat);
-			break;
-		case 'b':
-			Bomb bomb = new Bomb(position);
-			ImageGUI.getInstance().addImage(bomb);
-			interactibles.add(bomb);
-			break;
-		case 'P':
-			ImageGUI.getInstance().addImage(new Princess(position));
-			break;
-		case 'H':
-			break;
-		default:
-			System.out.println("Unknown tile: " + tile);
+			case 'W':
+				ImageGUI.getInstance().addImage(new Wall(position));
+				break;
+			case '0':
+				ImageGUI.getInstance().addImage(new DoorClosed(position));
+				break;
+			case 'G':
+				DonkeyKong dk = new DonkeyKong(position);
+				ImageGUI.getInstance().addImage(dk);
+				interactibles.add(dk);
+				break;
+			case 'B':
+				Bat bat = new Bat(position);
+				ImageGUI.getInstance().addImage(bat);
+				interactibles.add(bat);
+				break;
+			case 'S':
+				ImageGUI.getInstance().addImage(new Stairs(position));
+				break;
+			case 's':
+				Sword sword = new Sword(position);
+				ImageGUI.getInstance().addImage(sword);
+				interactibles.add(sword);
+				break;
+			case 't':
+				ImageGUI.getInstance().addImage(new Trap(position));
+				break;
+			case 'm':
+				GoodMeat meat = new GoodMeat(position);
+				ImageGUI.getInstance().addImage(meat);
+				interactibles.add(meat);
+				break;
+			case 'b':
+				Bomb bomb = new Bomb(position);
+				ImageGUI.getInstance().addImage(bomb);
+				interactibles.add(bomb);
+				break;
+			case 'P':
+				ImageGUI.getInstance().addImage(new Princess(position));
+				break;
+			case 'H':
+				break;
+			default:
+				System.out.println("Unknown tile: " + tile);
 		}
 	}
 
@@ -200,16 +206,9 @@ public class Room {
 	}
 	
 	public void tick() {
-	    roomTickCounter++;
-	    for (Interactible interactible : new ArrayList<>(interactibles)) {  // Cria uma cópia para evitar ConcurrentModificationException
-	        if (interactible instanceof Banana) {
-	            ((Banana) interactible).fall();
-	        }
-	    }
-	    System.out.println("Room tick: " + roomTickCounter);
+		roomTickCounter++;
+//		System.out.println("Room tick: " + roomTickCounter);
 	}
-
-
 	
 	public void nextRoom(Point2D openDoorPosition) {
 		ImageGUI.getInstance().addImage(new DoorOpen(openDoorPosition));
