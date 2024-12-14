@@ -207,6 +207,12 @@ public class Room {
 	    return tile == '0';
 	}
 	
+	public boolean isPrincess(Point2D position) {
+		if (!isWithinRoom(position))
+			return false;
+		return roomGrid[position.getY()][position.getX()] == 'P';
+	}
+	
 	public void tick() {
 		roomTickCounter++;
 //		System.out.println("Room tick: " + roomTickCounter);

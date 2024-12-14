@@ -38,6 +38,5 @@ public class Trap extends GameObject implements ImageTile, Interactible {
     	Player player = Player.getInstance();
     	player.takeDamage(1);
 		Status.getInstance().setDirtyFlag(true);
-
     }
 }
