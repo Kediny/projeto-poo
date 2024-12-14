@@ -47,26 +47,26 @@ public class Status {
     
     public void printStatus(String text) {
     	ImageGUI.getInstance().setStatusMessage(text);
+    	GameEngine.sleep(500);
+		dirtyFlag = true;
     }
     
     public void printKill(String enemy) {
     	String text = enemy + " was killed!";
-    	ImageGUI.getInstance().setStatusMessage(text);
-		GameEngine.sleep(500);
-		dirtyFlag = true;
+    	printStatus(text);
     }
     
-    public void printLost(String text) {
-    	ImageGUI.getInstance().setStatusMessage(text);
-		GameEngine.sleep(500);
-		dirtyFlag = true;
-	}
-    
-    public void printEnterNext(String text) {
-    	ImageGUI.getInstance().setStatusMessage(text);
-		GameEngine.sleep(500);
-		dirtyFlag = true;
-	}
+//    public void printLost(String text) {
+//    	ImageGUI.getInstance().setStatusMessage(text);
+//		GameEngine.sleep(500);
+//		dirtyFlag = true;
+//	}
+//    
+//    public void printEnterNext(String text) {
+//    	ImageGUI.getInstance().setStatusMessage(text);
+//		GameEngine.sleep(500);
+//		dirtyFlag = true;
+//	}
     
     public Player getPlayer() {
     	return this.player;

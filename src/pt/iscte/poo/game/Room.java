@@ -74,7 +74,8 @@ public class Room {
 	        }
 	        
 	        heroStartingPosition = findSpawnPoint();
-	        player = Player.spawn(heroStartingPosition);
+	        player = Player.getInstance();
+	        player.setPosition(heroStartingPosition);
 	        ImageGUI.getInstance().addImage(player);
 			roomTickCounter = 0;
 
@@ -89,15 +90,12 @@ public class Room {
 			Point2D position = new Point2D(col, row);
 			ImageGUI.getInstance().addImage(new Floor(position));
 		}
-
 		for (int col = 0; col < line.length(); col++) {
 			char tile = line.charAt(col);
 			Point2D position = new Point2D(col, row);
-
 			if (tile == ' ') {
 				continue;
 			}
-
 			createObjectFromTile(tile, position);
 		}
 	}
@@ -215,19 +213,19 @@ public class Room {
 	
 	public void tick() {
 		roomTickCounter++;
-//		System.out.println("Room tick: " + roomTickCounter);
+		System.out.println("Room tick: " + roomTickCounter);
 	}
 	
 	public void nextRoom(Point2D openDoorPosition) {
 		ImageGUI.getInstance().addImage(new DoorOpen(openDoorPosition));
 		ImageGUI.getInstance().update();
-		GameEngine.sleep(500);
 		player.setPosition(openDoorPosition);
 		player.update();
+		GameEngine.sleep(250);
 		Status.getInstance().setDirtyFlag(false);
-		Status.getInstance().printEnterNext("Entering next room.........");
-		Status.getInstance().printEnterNext("Entering next room..................");
-		Status.getInstance().printEnterNext("Entering next room...........................");
+		Status.getInstance().printStatus("Entering next room.........");
+		Status.getInstance().printStatus("Entering next room..................");
+		Status.getInstance().printStatus("Entering next room...........................");
 		if (nextRoom == null || nextRoom.isEmpty()) {
 	        System.out.println("No next room defined! Transition aborted.");
 	        return;
@@ -239,6 +237,11 @@ public class Room {
 		ImageGUI.getInstance().clearImages();
 	    loadRoom(room);
 	    player.setPosition(heroStartingPosition);
+	    player.update();
+	}
+	
+	public void reloadRoom(String room) {
+		player.setPosition(heroStartingPosition);
 	    player.update();
 	}
 	

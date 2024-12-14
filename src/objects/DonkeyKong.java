@@ -79,7 +79,6 @@ public class DonkeyKong extends GameObject implements ImageTile, Interactible {
     	Player player = Player.getInstance();
     	takeDamage(player.getAttackPower());
     	if (!isAlive()) {
-    		Status.getInstance().setDirtyFlag(false);
     		stopMovement();
 	    	ImageGUI.getInstance().removeImage(this);
 			Room.getInstance().getInteractibles().remove(this);
