@@ -142,7 +142,9 @@ public class Room {
 				interactibles.add(bomb);
 				break;
 			case 'P':
-				ImageGUI.getInstance().addImage(new Princess(position));
+				Princess princess = new Princess(position);
+				ImageGUI.getInstance().addImage(princess);
+				interactibles.add(princess);
 				break;
 			case 'H':
 				break;
@@ -213,7 +215,7 @@ public class Room {
 	
 	public void tick() {
 		roomTickCounter++;
-		System.out.println("Room tick: " + roomTickCounter);
+//		System.out.println("Room tick: " + roomTickCounter);
 	}
 	
 	public void nextRoom(Point2D openDoorPosition) {

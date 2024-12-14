@@ -1,9 +1,11 @@
 package objects;
 
+import pt.iscte.poo.gui.ImageGUI;
 import pt.iscte.poo.gui.ImageTile;
 import pt.iscte.poo.utils.Point2D;
 import pt.iscte.poo.game.Interactible;
 import pt.iscte.poo.game.Status;
+import pt.iscte.poo.game.GameEngine;
 import pt.iscte.poo.game.GameObject;
 
 public class Princess extends GameObject implements ImageTile, Interactible {
@@ -30,7 +32,12 @@ public class Princess extends GameObject implements ImageTile, Interactible {
     
     @Override
     public void interaction() {
-    	Player player = Player.getInstance();
-//    	TODO add winning interaction
+    	GameEngine engine = GameEngine.getInstance();
+    	int ticks = engine.getTickCounter();
+    	String win = "You won!\nInput your name:";
+    	String name = ImageGUI.getInstance().askUser(win);
+    	String time = engine.convertTicksToTime(ticks);
+    	engine.bestTimes(time, name);
+    	engine.resetGame();
     }
 }

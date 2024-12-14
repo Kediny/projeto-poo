@@ -56,18 +56,6 @@ public class Status {
     	printStatus(text);
     }
     
-//    public void printLost(String text) {
-//    	ImageGUI.getInstance().setStatusMessage(text);
-//		GameEngine.sleep(500);
-//		dirtyFlag = true;
-//	}
-//    
-//    public void printEnterNext(String text) {
-//    	ImageGUI.getInstance().setStatusMessage(text);
-//		GameEngine.sleep(500);
-//		dirtyFlag = true;
-//	}
-    
     public Player getPlayer() {
     	return this.player;
     }
@@ -82,10 +70,5 @@ public class Status {
     	if (dirtyFlag != value) {
             dirtyFlag = value;
         }
-    	String currentFunctionName = new Object(){}.getClass().getEnclosingMethod().getName();
-    	StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
-    	String callingFunctionName = stackTrace[2].getMethodName();
-    	String ccallingFunctionName = stackTrace[3].getMethodName();
-    	System.out.println(currentFunctionName + " <- " + callingFunctionName + " <- " + ccallingFunctionName + "\n");
     } 
 }

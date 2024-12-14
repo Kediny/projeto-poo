@@ -5,6 +5,8 @@ import pt.iscte.poo.observer.Observed;
 import pt.iscte.poo.observer.Observer;
 import pt.iscte.poo.utils.Direction;
 import objects.Player;
+import java.io.*;
+import java.util.*;
 
 public class GameEngine implements Observer {
 	
@@ -16,6 +18,7 @@ public class GameEngine implements Observer {
 	private int lastTickProcessed = 0;
 	
 	private GameEngine() {
+		// refresh
 		currentRoom = Room.getInstance();
 		player = Player.getInstance();
 		status = Status.getInstance();
@@ -31,11 +34,12 @@ public class GameEngine implements Observer {
         return instance;
     }
 	
-	public static void resetGame() {
+	public void resetGame() {
 		Player.getInstance().resetPlayer();
 		ImageGUI.getInstance().clearImages();
 		Room.killInstance();
 		Room.getInstance();
+		lastTickProcessed = 0;
 		Status.getInstance().setDirtyFlag(true);
     }
 
@@ -75,6 +79,77 @@ public class GameEngine implements Observer {
         } catch (InterruptedException e) {
             System.out.println("The sleep was interrupted.");
         }
+	}
+	
+	public String convertTicksToTime(int ticks) {
+	    int totalMilliseconds = ticks * 500;
+	    int minutes = totalMilliseconds / 60000;
+	    int remainingMilliseconds = totalMilliseconds % 60000;
+	    int seconds = remainingMilliseconds / 1000;
+	    int milliseconds = remainingMilliseconds % 1000;
+	    return String.format("%dm%ds%dms", minutes, seconds, milliseconds);
+	}
+
+	public void bestTimes(String time, String playerName) {
+	    File file = new File("src/objects/besttimes.txt");
+	    List<String> bestTimes = new ArrayList<>();
+	    if (file.exists()) {
+	        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+	            String line;
+	            while ((line = br.readLine()) != null) {
+	                bestTimes.add(line);
+	            }
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
+	    } else {
+	        try {
+	            file.createNewFile();
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
+	    }
+	    bestTimes.add(time + " - " + playerName);
+	    bestTimes.sort((score1, score2) -> {
+	        int time1 = parseTimeToMilliseconds(score1.split(" - ")[0]);
+	        int time2 = parseTimeToMilliseconds(score2.split(" - ")[0]);
+	        return Integer.compare(time1, time2);
+	    });
+	    if (bestTimes.size() > 5) {
+	        bestTimes = bestTimes.subList(0, 5);
+	    }
+	    try (BufferedWriter bw = new BufferedWriter(new FileWriter(file))) {
+	        for (String score : bestTimes) {
+	            bw.write(score);
+	            bw.newLine();
+	        }
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	    }
+	}
+
+	private static int parseTimeToMilliseconds(String time) {
+	    int minutes = 0, seconds = 0, milliseconds = 0;
+
+	    String[] timeParts = time.split("m|s|ms");
+	    
+	    if (time.contains("m")) {
+	        minutes = Integer.parseInt(timeParts[0]);
+	    }
+	    if (time.contains("s")) {
+	        seconds = Integer.parseInt(timeParts[timeParts.length > 1 ? 1 : 0]);
+	    }
+	    if (time.contains("ms")) {
+	        milliseconds = Integer.parseInt(timeParts[timeParts.length - 1]);
+	    }
+
+	    return (minutes * 60 * 1000) + (seconds * 1000) + milliseconds;
+	}
+
+
+	
+	public int getTickCounter() {
+		return lastTickProcessed;
 	}
 
 }

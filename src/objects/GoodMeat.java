@@ -15,11 +15,6 @@ public class GoodMeat implements ImageTile, Interactible {
         this.position = position;
     }
     
-//    public void updateMeat(){
-//    	if (Room.getInstance().getRoomTickCounter() > 10)
-//    		Room.getInstance().getInteractibles().remove(this);
-//    }
-    
     @Override
     public String getName() {
         return "GoodMeat";

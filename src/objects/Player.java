@@ -142,7 +142,7 @@ public class Player extends GameObject implements ImageTile {
         GameEngine.sleep(500);
         Status.getInstance().printStatus("Restarting...");
         GameEngine.sleep(2000);
-        GameEngine.resetGame();
+        GameEngine.getInstance().resetGame();
 	}
 	
 	public void resetPlayer() {
