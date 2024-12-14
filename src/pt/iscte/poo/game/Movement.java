@@ -45,6 +45,8 @@ public class Movement {
     	Room room = Room.getInstance();
 		Vector2D v = new Vector2D(0,1);
 	    Point2D below = player.getPosition().plus(v);
+	    Vector2D t = new Vector2D(0,0);
+	    Point2D trap = player.getPosition().plus(t);
 	    if (room.isStairs(player.getPosition()) || room.isStairs(below)) {
 	        return;
 	    }
@@ -52,6 +54,6 @@ public class Movement {
 	        player.setPosition(below);
 	        player.update();
 	    }
+	    if(room.isTrap(trap)) player.takeDamage(1);
 	}
-    
 }

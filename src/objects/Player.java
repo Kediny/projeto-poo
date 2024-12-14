@@ -14,7 +14,7 @@ public class Player extends GameObject implements ImageTile {
 	private Point2D position;
 	private int maxLives = 3;
 	private int lives = maxLives;
-	private int fullHealth = 1;
+	private int fullHealth = 3;
     private boolean hasSword = false;
     private boolean hasBomb = false;
     private Status currentStatus;
@@ -73,7 +73,7 @@ public class Player extends GameObject implements ImageTile {
     public void setHasSword(boolean hasSword) {
         this.hasSword = hasSword;
         currentStatus.setDirtyFlag(true);
-        if (hasSword) setAttackPower(2);
+        if (hasSword) setAttackPower(3);
     }
     
     @Override
@@ -114,6 +114,7 @@ public class Player extends GameObject implements ImageTile {
             GameEngine.sleep(500);
             Status.getInstance().printStatus("You lost a life...........................");
             GameEngine.sleep(500);
+//          TODO implementar se o bife já foi consumido, não dar respawn e 
             Room.getInstance().spawnRoom(Room.getInstance().getCurrentRoom());
             heal();
         } else {
@@ -145,9 +146,9 @@ public class Player extends GameObject implements ImageTile {
     }
 	
 	public void loseGame() {
-		Status.getInstance().printStatus("YOU LOST THE GAME.");
+		Status.getInstance().printLost("YOU LOST THE GAME.");
         GameEngine.sleep(500);
-        Status.getInstance().printStatus("Restarting...");
+        Status.getInstance().printLost("Restarting...");
         GameEngine.sleep(2000);
         GameEngine.resetGame();
 	}

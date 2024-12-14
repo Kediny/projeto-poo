@@ -43,7 +43,7 @@ public class Banana extends GameObject implements ImageTile, Interactible {
         if (player.getPosition().equals(position)) {
             player.takeDamage(DAMAGE);
             removeSelf();
-            Status.getInstance().printStatus("Player hit by a banana!");
+//            Status.getInstance().printStatus("Player hit by a banana!");
         }
     }
     

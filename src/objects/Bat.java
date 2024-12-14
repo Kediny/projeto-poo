@@ -84,9 +84,14 @@ public class Bat extends GameObject implements ImageTile, Interactible {
     @Override
     public void interaction() {
     	Player player = Player.getInstance();
-    	ImageGUI.getInstance().removeImage(this);
-    	Status.getInstance().printKill(getName());
-		Room.getInstance().getInteractibles().remove(this);
+    	takeDamage(player.getAttackPower());
+    	if (!isAlive()) {
+    		Status.getInstance().setDirtyFlag(false);
+    		stopMovement();
+	    	ImageGUI.getInstance().removeImage(this);
+			Room.getInstance().getInteractibles().remove(this);
+	    	Status.getInstance().printKill(getName());
+    	}
     	if (!player.getHasSword())
     		player.takeDamage(getAttackPower());
     }

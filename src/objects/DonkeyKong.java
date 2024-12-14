@@ -58,7 +58,6 @@ public class DonkeyKong extends GameObject implements ImageTile, Interactible {
         }
     }
 
-
     private void moveRandomly() {
         Direction randomDir = getRandomHorizontalDirection();
         Point2D newPosition = Movement.tryMove(position, randomDir);
@@ -80,6 +79,7 @@ public class DonkeyKong extends GameObject implements ImageTile, Interactible {
     	Player player = Player.getInstance();
     	takeDamage(player.getAttackPower());
     	if (!isAlive()) {
+    		Status.getInstance().setDirtyFlag(false);
     		stopMovement();
 	    	ImageGUI.getInstance().removeImage(this);
 			Room.getInstance().getInteractibles().remove(this);
@@ -88,6 +88,5 @@ public class DonkeyKong extends GameObject implements ImageTile, Interactible {
     	if (!player.getHasSword()) {
     		player.takeDamage(getAttackPower());
     	}
-    }
-    
+    }   
 }

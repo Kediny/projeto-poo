@@ -129,7 +129,9 @@ public class Room {
 				interactibles.add(sword);
 				break;
 			case 't':
+				Trap trap = new Trap(position);
 				ImageGUI.getInstance().addImage(new Trap(position));
+				interactibles.add(trap);
 				break;
 			case 'm':
 				GoodMeat meat = new GoodMeat(position);
@@ -216,13 +218,10 @@ public class Room {
 		GameEngine.sleep(500);
 		player.setPosition(openDoorPosition);
 		player.update();
-		ImageGUI.getInstance().update();
-		Status.getInstance().printStatus("Entering next room.........");
-		GameEngine.sleep(500);
-		Status.getInstance().printStatus("Entering next room..................");
-		GameEngine.sleep(500);
-		Status.getInstance().printStatus("Entering next room...........................");
-		GameEngine.sleep(500);
+		Status.getInstance().setDirtyFlag(false);
+		Status.getInstance().printEnterNext("Entering next room.........");
+		Status.getInstance().printEnterNext("Entering next room..................");
+		Status.getInstance().printEnterNext("Entering next room...........................");
 		if (nextRoom == null || nextRoom.isEmpty()) {
 	        System.out.println("No next room defined! Transition aborted.");
 	        return;
