@@ -14,6 +14,7 @@ public class Room {
 	private Point2D heroStartingPosition;
 	private Player player;
 	private String nextRoom = null;
+	private String currentRoom = null;
 	private static final int MAX_X = 9;
 	private static final int MAX_Y = 9;
 	private ArrayList<Interactible> interactibles;
@@ -43,7 +44,8 @@ public class Room {
 		return instance;
 	}
 
-	private void loadRoom(String fileName) {
+	public void loadRoom(String fileName) {
+		currentRoom = fileName;
 	    String filePath = "rooms/" + fileName;
 	    interactibles = new ArrayList<Interactible>();
 	    roomGrid = new char[MAX_Y + 1][MAX_X + 1];
@@ -226,8 +228,12 @@ public class Room {
 	        System.out.println("No next room defined! Transition aborted.");
 	        return;
 	    }
-	    ImageGUI.getInstance().clearImages();
-	    loadRoom(nextRoom);
+	    spawnRoom(nextRoom);
+	}
+	
+	public void spawnRoom(String room) {
+		ImageGUI.getInstance().clearImages();
+	    loadRoom(room);
 	    player.setPosition(heroStartingPosition);
 	    player.update();
 	}
@@ -250,6 +256,10 @@ public class Room {
 	
 	public Player getPlayer() {
 		return player;
+	}
+	
+	public String getCurrentRoom() {
+		return currentRoom;
 	}
 
 }
