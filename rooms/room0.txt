@@ -1,6 +1,6 @@
 #0;room1.txt
 0 G       
-WWWWWWWSWW
+WWWWWWWSWh
        S  
 tWSWWWWWWW
   S       

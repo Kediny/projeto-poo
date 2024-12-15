@@ -166,6 +166,11 @@ public class Room {
                 ImageGUI.getInstance().addImage(new Trap(position));
                 interactibles.add(trap);
                 break;
+            case 'h':
+                HiddenTrap hTrap = new HiddenTrap(position);
+                ImageGUI.getInstance().addImage(new Wall(position));
+                interactibles.add(hTrap);
+                break;
             case 'm':
                 GoodMeat meat = new GoodMeat(position);
                 ImageGUI.getInstance().addImage(meat);
@@ -248,7 +253,7 @@ public class Room {
                 banana.applyGravity();
             } else if (interactible instanceof Bomb) {
                 Bomb bomb = (Bomb) interactible;
-                bomb.tick();
+                if(Player.getInstance().bombDropped) { bomb.tick(); }
             }
         } 
         

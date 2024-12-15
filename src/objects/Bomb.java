@@ -46,7 +46,7 @@ public class Bomb implements ImageTile, Interactible {
 
     public void tick() {
         timer--;
-        if (timer <= 0) {
+        if (timer == 0) {
             explode();
         }
     }
@@ -56,14 +56,13 @@ public class Bomb implements ImageTile, Interactible {
         for (int dx = -EXPLOSION_RADIUS; dx <= EXPLOSION_RADIUS; dx++) {
             for (int dy = -EXPLOSION_RADIUS; dy <= EXPLOSION_RADIUS; dy++) {
                 Point2D targetPos = position.plus(dx, dy);
-                for (Interactible interactible : new ArrayList<>(room.getInteractibles())) {
+                for (Interactible interactible : room.getInteractibles()) {
                     if (interactible instanceof Wall || interactible instanceof Stairs) continue;
                     if (interactible.getPosition().equals(targetPos)) {
                         if (interactible instanceof Player) {
                             Player.getInstance().takeDamage(1);
                         } else {
                             room.removeInteractible(interactible);
-//                            ImageGUI.getInstance().removeImage();
                         }
                     }
                 }

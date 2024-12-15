@@ -31,15 +31,19 @@ public class Movement {
 
 		if (!futurePosition.equals(currentPosition)) {
 			currentRoom.getPlayer().setPosition(futurePosition);
-			for(Interactible interactible : currentRoom.getInteractibles()) {
-				if(interactible.getPosition().equals(futurePosition)) {
-					interactible.interaction();
-					break;
-				}
-			}
+			checkForInteractions(futurePosition);
 			currentRoom.getPlayer().update();
 		}
 	}
+    
+    public static void checkForInteractions(Point2D futurePosition) {
+    	for(Interactible interactible : Room.getInstance().getInteractibles()) {
+			if(interactible.getPosition().equals(futurePosition)) {
+				interactible.interaction();
+				break;
+			}
+		}
+    }
     
     public static void applyGravity(Player player) {
     	Room room = Room.getInstance();
@@ -52,6 +56,6 @@ public class Movement {
 	        player.setPosition(below);
 	        player.update();
 	    }
-	    if(room.isTrap(player.getPosition())) player.takeDamage(1);
+	    checkForInteractions(below);
 	}
 }

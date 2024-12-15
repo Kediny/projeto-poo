@@ -1,13 +1,18 @@
 # TO-DO
 
-new
-- quando dá reset aparecem inimigos fantasma
-- às vezes quando dá respawn aparece com 2/3 de health
-- quando o player vai contra a bomba após a colocar toma dano infinito e morre
-- superman jump
-- bomba não "rebenta" as traps
+fix
+? reset
+?? enemies not loading
+?? phantom enemies
+?? accumulating time
+?? wrong stats
+? bombs
+?? explosions not working
+?? player being infinitely damaged on interaction
+? superman jump
 
 done
+x hidden traps
 x room load. missing line: warns user, aborts game using dispose()
 x room load. file not found, requests name on console
 x room load. missing or unrecognized char: warns user, uses Floor instead

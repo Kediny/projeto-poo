@@ -34,13 +34,13 @@ public class GameEngine implements Observer {
         return instance;
     }
 	
-	public void resetGame() {
-		Player.getInstance().resetPlayer();
+	public static void resetGame() {
+		GameEngine.getInstance().resetTickCounter();
 		ImageGUI.getInstance().clearImages();
-		Room.getInstance().getInteractibles().clear();
 		Room.killInstance();
+		Player.getInstance().resetPlayer();
+		GameEngine.sleep(100);
 		Room.getInstance();
-		lastTickProcessed = 0;
 		Status.getInstance().setDirtyFlag(true);
     }
 
@@ -149,6 +149,10 @@ public class GameEngine implements Observer {
 	
 	public int getTickCounter() {
 		return lastTickProcessed;
+	}
+	
+	public void resetTickCounter() {
+		lastTickProcessed = 0;
 	}
 
 }
