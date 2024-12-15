@@ -1,17 +1,14 @@
 package objects;
 
 import pt.iscte.poo.game.Interactible;
-import pt.iscte.poo.game.Room;
 import pt.iscte.poo.game.Status;
-import pt.iscte.poo.gui.ImageGUI;
 import pt.iscte.poo.gui.ImageTile;
 import pt.iscte.poo.utils.Point2D;
-import pt.iscte.poo.game.GameEngine;
 import pt.iscte.poo.game.GameObject;
 
 
 public class Trap extends GameObject implements ImageTile, Interactible {
-    
+	
 	private final Point2D position;
 
     public Trap(Point2D position) {

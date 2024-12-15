@@ -10,265 +10,271 @@ import java.util.ArrayList;
 
 public class Room {
 
-	private static Room instance;
-	private Point2D heroStartingPosition;
-	private Player player;
-	private String nextRoom = null;
-	private String currentRoom = null;
-	private static final int MAX_X = 9;
-	private static final int MAX_Y = 9;
-	private ArrayList<Interactible> interactibles;
-	private int roomTickCounter = 0;
+    // Attributes
+    private static Room instance;
+    private static final int MAX_X = 9;
+    private static final int MAX_Y = 9;
+    private int roomTickCounter = 0;
+    private Point2D heroStartingPosition;
+    private Player player;
+    private String nextRoom = null;
+    private String currentRoom = null;
+    private ArrayList<Interactible> interactibles;
+    private char[][] roomGrid;
 
-	public static int getMaxX() {
-	    return MAX_X;
-	}
+    // Constructors
+    private Room(String roomFileName) {
+        instance = this;
+        loadRoom(roomFileName);
+    }
 
-	public static int getMaxY() {
-	    return MAX_Y;
-	}
+    private Room() {
+        instance = this;
+        loadRoom("room0.txt");
+    }
 
-	private char[][] roomGrid;
+    // Setters and getters
+    public static Room getInstance() {
+        if (Room.instance == null) {
+            Room.instance = new Room();
+        }
+        return Room.instance;
+    }
 
-	private Room(String roomFileName) {
-		instance = this;
-		loadRoom(roomFileName);
-	}
-
-	private Room() {
-		instance = this;
-		loadRoom("room0.txt");
-	}
-
-	public static Room getInstance() {
-		if (Room.instance == null) {
-    		Room.instance = new Room();
-    	}
-		return Room.instance;
-	}
-	
-	public static void killInstance() {
+    public static void killInstance() {
         Room.instance = null;
     }
 
-	public void loadRoom(String fileName) {
-		currentRoom = fileName;
-		String filePath = "rooms/" + fileName;
-	    interactibles = new ArrayList<Interactible>();
-	    roomGrid = new char[MAX_Y + 1][MAX_X + 1];
-	    try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
-	        String line;
-	        int row = 0;
+    public String getNextRoom() {
+        return nextRoom;
+    }
 
-	        line = reader.readLine();
-	        if (line != null && line.startsWith("#0;")) {
-	            nextRoom = line.split(";")[1].trim();
-	            line = reader.readLine();
-	        } else {
-	            nextRoom = null;
-	        }
+    public Point2D getHeroStartingPosition() {
+        return heroStartingPosition;
+    }
 
-	        while (line != null) {
-	            processLine(line, row++);
-	            line = reader.readLine();
-	        }
-	        
-	        heroStartingPosition = findSpawnPoint();
-	        player = Player.getInstance();
-	        player.setPosition(heroStartingPosition);
-	        ImageGUI.getInstance().addImage(player);
-			roomTickCounter = 0;
+    public int getRoomTickCounter() {
+        return roomTickCounter;
+    }
 
-	    } catch (IOException e) {
-	        e.printStackTrace();
-	    }
-	}
+    public ArrayList<Interactible> getInteractibles() {
+        return interactibles;
+    }
 
-	private void processLine(String line, int row) {
-		for (int col = 0; col < line.length(); col++) {
-			roomGrid[row][col] = line.charAt(col);
-			Point2D position = new Point2D(col, row);
-			ImageGUI.getInstance().addImage(new Floor(position));
-		}
-		for (int col = 0; col < line.length(); col++) {
-			char tile = line.charAt(col);
-			Point2D position = new Point2D(col, row);
-			if (tile == ' ') {
-				continue;
-			}
-			createObjectFromTile(tile, position);
-		}
-	}
+    public Player getPlayer() {
+        return player;
+    }
 
-	private void createObjectFromTile(char tile, Point2D position) {
-		switch (tile) {
-			case 'W':
-				ImageGUI.getInstance().addImage(new Wall(position));
-				break;
-			case '0':
-				ImageGUI.getInstance().addImage(new DoorClosed(position));
-				break;
-			case 'G':
-				DonkeyKong dk = new DonkeyKong(position);
-				ImageGUI.getInstance().addImage(dk);
-				interactibles.add(dk);
-				break;
-			case 'B':
-				Bat bat = new Bat(position);
-				ImageGUI.getInstance().addImage(bat);
-				interactibles.add(bat);
-				break;
-			case 'S':
-				ImageGUI.getInstance().addImage(new Stairs(position));
-				break;
-			case 's':
-				Sword sword = new Sword(position);
-				ImageGUI.getInstance().addImage(sword);
-				interactibles.add(sword);
-				break;
-			case 't':
-				Trap trap = new Trap(position);
-				ImageGUI.getInstance().addImage(new Trap(position));
-				interactibles.add(trap);
-				break;
-			case 'm':
-				GoodMeat meat = new GoodMeat(position);
-				ImageGUI.getInstance().addImage(meat);
-				interactibles.add(meat);
-				break;
-			case 'b':
-				Bomb bomb = new Bomb(position);
-				ImageGUI.getInstance().addImage(bomb);
-				interactibles.add(bomb);
-				break;
-			case 'P':
-				Princess princess = new Princess(position);
-				ImageGUI.getInstance().addImage(princess);
-				interactibles.add(princess);
-				break;
-			case 'H':
-				break;
-			default:
-				System.out.println("Unknown tile: " + tile);
-		}
-	}
+    public String getCurrentRoom() {
+        return currentRoom;
+    }
 
-	public String getNextRoom() {
-		return nextRoom;
-	}
+    // Functions
+    public void loadRoom(String fileName) {
+        currentRoom = fileName;
+        String filePath = "rooms/" + fileName;
+        interactibles = new ArrayList<Interactible>();
+        roomGrid = new char[MAX_Y + 1][MAX_X + 1];
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            int row = 0;
 
-	public Point2D getHeroStartingPosition() {
-		return heroStartingPosition;
-	}
+            line = reader.readLine();
+            if (line != null && line.startsWith("#0;")) {
+                nextRoom = line.split(";")[1].trim();
+                line = reader.readLine();
+            } else {
+                nextRoom = null;
+            }
 
-	public boolean isWithinRoom(Point2D position) {
-		return position.getX() >= 0 && position.getX() <= MAX_X && position.getY() >= 0 && position.getY() <= MAX_Y;
-	}
+            while (line != null) {
+                processLine(line, row++);
+                line = reader.readLine();
+            }
 
-	private Point2D findSpawnPoint() {
-		for (int row = MAX_Y; row >= 0; row--) {
-			for (int col = 0; col <= MAX_X; col++) {
-				if (roomGrid[row][col] == 'H') {
-					return new Point2D(col, row);
-				}
-			}
-		}
-		return null;
-	}
+            heroStartingPosition = findSpawnPoint();
+            player = Player.getInstance();
+            player.setPosition(heroStartingPosition);
+            ImageGUI.getInstance().addImage(player);
+            roomTickCounter = 0;
 
-	public boolean isWalkable(Point2D position) {
-	    return isWithinRoom(position) && !isWall(position) && !isFloor(position);
-	}
-	
-	public boolean isFloor(Point2D position) {
-	    return roomGrid[position.getY()][position.getX()] == 'F';
-	}
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
-	public boolean isWall(Point2D position) {
-		if (!isWithinRoom(position))
-			return false;
-		return roomGrid[position.getY()][position.getX()] == 'W';
-	}
-	
-	public boolean isStairs(Point2D position) {
-	    if (!isWithinRoom(position)) return false;
-	    return roomGrid[position.getY()][position.getX()] == 'S';
-	}
-	
-	public boolean isTrap(Point2D position) {
-		if (!isWithinRoom(position))
-			return false;
-		return roomGrid[position.getY()][position.getX()] == 't';
-	}
-	
-	public boolean isDoor(Point2D position) {
-	    if (!isWithinRoom(position)) return false;
-	    char tile = roomGrid[position.getY()][position.getX()];
-	    return tile == '0';
-	}
-	
-	public boolean isPrincess(Point2D position) {
-		if (!isWithinRoom(position))
-			return false;
-		return roomGrid[position.getY()][position.getX()] == 'P';
-	}
-	
-	public void tick() {
-		roomTickCounter++;
-//		System.out.println("Room tick: " + roomTickCounter);
-	}
-	
-	public void nextRoom(Point2D openDoorPosition) {
-		ImageGUI.getInstance().addImage(new DoorOpen(openDoorPosition));
-		ImageGUI.getInstance().update();
-		player.setPosition(openDoorPosition);
-		player.update();
-		GameEngine.sleep(250);
-		Status.getInstance().setDirtyFlag(false);
-		Status.getInstance().printStatus("Entering next room.........");
-		Status.getInstance().printStatus("Entering next room..................");
-		Status.getInstance().printStatus("Entering next room...........................");
-		if (nextRoom == null || nextRoom.isEmpty()) {
-	        System.out.println("No next room defined! Transition aborted.");
-	        return;
-	    }
-	    spawnRoom(nextRoom);
-	}
-	
-	public void spawnRoom(String room) {
-		ImageGUI.getInstance().clearImages();
-	    loadRoom(room);
-	    player.setPosition(heroStartingPosition);
-	    player.update();
-	}
-	
-	public void reloadRoom(String room) {
-		player.setPosition(heroStartingPosition);
-	    player.update();
-	}
-	
-	public int getRoomTickCounter() {
-		return roomTickCounter;
-	}
-	
-	public ArrayList<Interactible> getInteractibles() {
-		return interactibles;
-	}
-	
-	public void addInteractible(Interactible i) {
-		interactibles.add(i);
-	}
-	
-	public void removeInteractible(Interactible i) {
-		interactibles.remove(i);
-	}
-	
-	public Player getPlayer() {
-		return player;
-	}
-	
-	public String getCurrentRoom() {
-		return currentRoom;
-	}
+    private void processLine(String line, int row) {
+        for (int col = 0; col < line.length(); col++) {
+            roomGrid[row][col] = line.charAt(col);
+            Point2D position = new Point2D(col, row);
+            ImageGUI.getInstance().addImage(new Floor(position));
+        }
+        for (int col = 0; col < line.length(); col++) {
+            char tile = line.charAt(col);
+            Point2D position = new Point2D(col, row);
+            if (tile == ' ') {
+                continue;
+            }
+            createObjectFromTile(tile, position);
+        }
+    }
 
+    private void createObjectFromTile(char tile, Point2D position) {
+        switch (tile) {
+        	case 'H': break;
+            case 'W': ImageGUI.getInstance().addImage(new Wall(position)); break;
+            case '0': ImageGUI.getInstance().addImage(new DoorClosed(position)); break;
+            case 'S': ImageGUI.getInstance().addImage(new Stairs(position)); break;
+            case 'G':
+                DonkeyKong dk = new DonkeyKong(position);
+                ImageGUI.getInstance().addImage(dk);
+                interactibles.add(dk);
+                break;
+            case 'B':
+                Bat bat = new Bat(position);
+                ImageGUI.getInstance().addImage(bat);
+                interactibles.add(bat);
+                break;
+            case 's':
+                Sword sword = new Sword(position);
+                ImageGUI.getInstance().addImage(sword);
+                interactibles.add(sword);
+                break;
+            case 't':
+                Trap trap = new Trap(position);
+                ImageGUI.getInstance().addImage(new Trap(position));
+                interactibles.add(trap);
+                break;
+            case 'm':
+                GoodMeat meat = new GoodMeat(position);
+                ImageGUI.getInstance().addImage(meat);
+                interactibles.add(meat);
+                break;
+            case 'b':
+                Bomb bomb = new Bomb(position);
+                ImageGUI.getInstance().addImage(bomb);
+                interactibles.add(bomb);
+                break;
+            case 'P':
+                Princess princess = new Princess(position);
+                ImageGUI.getInstance().addImage(princess);
+                interactibles.add(princess);
+                break;
+            default: System.out.println("Unknown tile: " + tile);
+        }
+    }
+
+    public boolean isWithinRoom(Point2D position) {
+        return position.getX() >= 0 && position.getX() <= MAX_X && position.getY() >= 0 && position.getY() <= MAX_Y;
+    }
+
+    private Point2D findSpawnPoint() {
+        for (int row = MAX_Y; row >= 0; row--) {
+            for (int col = 0; col <= MAX_X; col++) {
+                if (roomGrid[row][col] == 'H') {
+                    return new Point2D(col, row);
+                }
+            }
+        }
+        return null;
+    }
+
+    public boolean isWalkable(Point2D position) {
+        return isWithinRoom(position) && !isWall(position) && !isFloor(position);
+    }
+
+    public boolean isFloor(Point2D position) {
+        return roomGrid[position.getY()][position.getX()] == 'F';
+    }
+
+    public boolean isWall(Point2D position) {
+        if (!isWithinRoom(position)) return false;
+        return roomGrid[position.getY()][position.getX()] == 'W';
+    }
+
+    public boolean isStairs(Point2D position) {
+        if (!isWithinRoom(position)) return false;
+        return roomGrid[position.getY()][position.getX()] == 'S';
+    }
+
+    public boolean isTrap(Point2D position) {
+        if (!isWithinRoom(position)) return false;
+        return roomGrid[position.getY()][position.getX()] == 't';
+    }
+
+    public boolean isDoor(Point2D position) {
+        if (!isWithinRoom(position)) return false;
+        char tile = roomGrid[position.getY()][position.getX()];
+        return tile == '0';
+    }
+
+    public boolean isPrincess(Point2D position) {
+        if (!isWithinRoom(position)) return false;
+        return roomGrid[position.getY()][position.getX()] == 'P';
+    }
+
+    public void tick() {
+        roomTickCounter++;
+        if (roomTickCounter == 10) {
+            updateGoodMeatToBadMeat();
+        }
+
+        for (Interactible interactible : new ArrayList<>(interactibles)) {
+            if (interactible instanceof Banana) {
+                Banana banana = (Banana) interactible;
+                banana.applyGravity();
+            }
+        }
+    }
+
+    private void updateGoodMeatToBadMeat() {
+        for (Interactible interactible : new ArrayList<>(interactibles)) {
+            if (interactible instanceof GoodMeat) {
+                GoodMeat goodMeat = (GoodMeat) interactible;
+                Point2D position = goodMeat.getPosition();
+                ImageGUI.getInstance().removeImage(goodMeat);
+                interactibles.remove(goodMeat);
+                BadMeat badMeat = new BadMeat(position);
+                ImageGUI.getInstance().addImage(badMeat);
+                interactibles.add(badMeat);
+            }
+        }
+    }
+
+    public void nextRoom(Point2D openDoorPosition) {
+        ImageGUI.getInstance().addImage(new DoorOpen(openDoorPosition));
+        ImageGUI.getInstance().update();
+        player.setPosition(openDoorPosition);
+        player.update();
+        GameEngine.sleep(250);
+        Status.getInstance().setDirtyFlag(false);
+        Status.getInstance().printStatus("Entering next room.........");
+        Status.getInstance().printStatus("Entering next room..................");
+        Status.getInstance().printStatus("Entering next room...........................");
+        if (nextRoom == null || nextRoom.isEmpty()) {
+            System.out.println("No next room defined! Transition aborted.");
+            return;
+        }
+        spawnRoom(nextRoom);
+    }
+
+    public void spawnRoom(String room) {
+        ImageGUI.getInstance().clearImages();
+        loadRoom(room);
+        player.setPosition(heroStartingPosition);
+        player.update();
+    }
+
+    public void reloadRoom(String room) {
+        player.setPosition(heroStartingPosition);
+        player.update();
+    }
+
+    public void addInteractible(Interactible i) {
+        interactibles.add(i);
+    }
+
+    public void removeInteractible(Interactible i) {
+        interactibles.remove(i);
+    }
 }

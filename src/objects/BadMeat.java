@@ -1,17 +1,20 @@
 package objects;
 
 import pt.iscte.poo.game.Interactible;
+import pt.iscte.poo.game.Room;
+import pt.iscte.poo.gui.ImageGUI;
 import pt.iscte.poo.gui.ImageTile;
 import pt.iscte.poo.utils.Point2D;
 
 public class BadMeat implements ImageTile, Interactible {
 	
 	private final Point2D position;
+    private Player player;
 
     public BadMeat(Point2D position) {
         this.position = position;
     }
-
+    
     @Override
     public String getName() {
         return "BadMeat";
@@ -29,7 +32,9 @@ public class BadMeat implements ImageTile, Interactible {
     
     @Override
     public void interaction() {
-    	Player player = Player.getInstance();
-    	player.takeDamage(2); // Custom interaction logic
+    	player = Player.getInstance();
+    	ImageGUI.getInstance().removeImage(this);
+    	player.takeDamage(2);
+    	Room.getInstance().getInteractibles().remove(this);
     }
 }

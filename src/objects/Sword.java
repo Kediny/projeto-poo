@@ -6,9 +6,8 @@ import pt.iscte.poo.gui.ImageTile;
 import pt.iscte.poo.utils.Point2D;
 
 public class Sword implements ImageTile, Interactible {
-	
-    private final Point2D position;
     
+	private final Point2D position;
     private Player player;
     
     public Sword(Point2D position) {

@@ -16,14 +16,53 @@ import pt.iscte.poo.utils.Point2D;
 import pt.iscte.poo.utils.Vector2D;
 
 public class Bat extends GameObject implements ImageTile, Interactible {
-	
-	private Point2D position;
-	private Timer movementTimer;
+    
+	// Attributes
+    private Point2D position;
+    private Timer movementTimer;
 
+    // Constructors
     public Bat(Point2D position) {
         this.position = position;
         setHealth(1);
         startRandomMovement();
+    }
+
+    // Getters e Setters
+    @Override
+    public String getName() {
+        return "Bat";
+    }
+
+    @Override
+    public int getLayer() {
+        return 2;
+    }
+
+    @Override
+    public Point2D getPosition() {
+        return position;
+    }
+
+    public void setPosition(Point2D position) {
+        this.position = position;
+    }
+
+    // Functions
+    @Override
+    public void interaction() {
+        Player player = Player.getInstance();
+        takeDamage(player.getAttackPower());
+        if (!isAlive()) {
+            Status.getInstance().setDirtyFlag(false);
+            stopMovement();
+            ImageGUI.getInstance().removeImage(this);
+            Room.getInstance().getInteractibles().remove(this);
+            Status.getInstance().printKill(getName());
+        }
+        if (!player.getHasSword()) {
+            player.takeDamage(getAttackPower());
+        }
     }
     
     private void startRandomMovement() {
@@ -43,21 +82,21 @@ public class Bat extends GameObject implements ImageTile, Interactible {
     }
 
     private void moveRandomly() {
-    	Point2D below = position.plus(new Vector2D(0,1));
-    	Point2D newPosition;
-    	if (Room.getInstance().isStairs(below)) {
-    		newPosition = Movement.tryMove(position, Direction.DOWN);
-    	} else {
-    		Direction randomDir = getRandomDirection();
-	        newPosition = Movement.tryMove(position, randomDir);
-    	}
-    	if (Player.getInstance().getPosition() != null && Player.getInstance().getPosition().equals(newPosition)) {
-    		this.interaction();
-    	}
+        Point2D below = position.plus(new Vector2D(0, 1));
+        Point2D newPosition;
+        if (Room.getInstance().isStairs(below)) {
+            newPosition = Movement.tryMove(position, Direction.DOWN);
+        } else {
+            Direction randomDir = getRandomDirection();
+            newPosition = Movement.tryMove(position, randomDir);
+        }
+        if (Player.getInstance().getPosition() != null && Player.getInstance().getPosition().equals(newPosition)) {
+            this.interaction();
+        }
         if (!Room.getInstance().isDoor(newPosition) && !newPosition.equals(position)) {
             position = newPosition;
         } else {
-        	moveRandomly();
+            moveRandomly();
         }
     }
 
@@ -65,35 +104,4 @@ public class Bat extends GameObject implements ImageTile, Interactible {
         Direction[] directions = {Direction.LEFT, Direction.RIGHT, Direction.UP, Direction.DOWN};
         return directions[new Random().nextInt(directions.length)];
     }
-    
-    @Override
-    public String getName() {
-        return "Bat";
-    }
-
-    @Override
-    public int getLayer() {
-        return 2;
-    }
-
-    @Override
-    public Point2D getPosition() {
-        return position;
-    }
-    
-    @Override
-    public void interaction() {
-    	Player player = Player.getInstance();
-    	takeDamage(player.getAttackPower());
-    	if (!isAlive()) {
-    		Status.getInstance().setDirtyFlag(false);
-    		stopMovement();
-	    	ImageGUI.getInstance().removeImage(this);
-			Room.getInstance().getInteractibles().remove(this);
-	    	Status.getInstance().printKill(getName());
-    	}
-    	if (!player.getHasSword())
-    		player.takeDamage(getAttackPower());
-    }
-    
 }

@@ -4,12 +4,12 @@ import pt.iscte.poo.gui.ImageGUI;
 import pt.iscte.poo.gui.ImageTile;
 import pt.iscte.poo.utils.Point2D;
 import pt.iscte.poo.game.Interactible;
-import pt.iscte.poo.game.Status;
 import pt.iscte.poo.game.GameEngine;
 import pt.iscte.poo.game.GameObject;
 
 public class Princess extends GameObject implements ImageTile, Interactible {
-    private final Point2D position;
+    
+	private final Point2D position;
 
     public Princess(Point2D position) {
         this.position = position;

@@ -92,8 +92,7 @@ public class Player extends GameObject implements ImageTile {
     public void takeDamage(int damage) {
     	if (health >= damage)
     		health -= damage;
-    	if (health <= 0)
-    		loseLife();
+    	if (health <= 0 || health <= damage) loseLife();
     	currentStatus.setDirtyFlag(true);
     }
 
@@ -151,5 +150,4 @@ public class Player extends GameObject implements ImageTile {
 		hasSword = false;
 	    hasBomb = false;
 	}
-
 }
