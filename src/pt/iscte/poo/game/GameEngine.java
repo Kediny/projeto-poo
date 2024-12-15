@@ -33,16 +33,6 @@ public class GameEngine implements Observer {
         }
         return instance;
     }
-	
-	public static void resetGame() {
-		GameEngine.getInstance().resetTickCounter();
-		ImageGUI.getInstance().clearImages();
-		Room.killInstance();
-		Player.getInstance().resetPlayer();
-		GameEngine.sleep(100);
-		Room.getInstance();
-		Status.getInstance().setDirtyFlag(true);
-    }
 
 	@Override
 	public void update(Observed source) {
@@ -116,8 +106,8 @@ public class GameEngine implements Observer {
 	        int time2 = parseTimeToMilliseconds(score2.split(" - ")[0]);
 	        return Integer.compare(time1, time2);
 	    });
-	    if (bestTimes.size() > 5) {
-	        bestTimes = bestTimes.subList(0, 5);
+	    if (bestTimes.size() > 10) {
+	        bestTimes = bestTimes.subList(0, 10);
 	    }
 	    try (BufferedWriter bw = new BufferedWriter(new FileWriter(file))) {
 	        for (String score : bestTimes) {
@@ -127,6 +117,18 @@ public class GameEngine implements Observer {
 	    } catch (IOException e) {
 	        e.printStackTrace();
 	    }
+	}
+	
+	public void printBestTimes() {
+        String filePath = "src/objects/besttimes.txt";
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                System.out.println(line);
+            }
+        } catch (IOException e) {
+            System.err.println("Error reading file: " + e.getMessage());
+        }
 	}
 
 	private static int parseTimeToMilliseconds(String time) {

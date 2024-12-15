@@ -149,9 +149,7 @@ public class Player extends GameObject implements ImageTile {
 	public void loseGame() {
 		Status.getInstance().printStatus("YOU LOST THE GAME.");
         GameEngine.sleep(500);
-        Status.getInstance().printStatus("Restarting...");
-        GameEngine.sleep(2000);
-        GameEngine.getInstance().resetGame();
+        ImageGUI.getInstance().dispose();
 	}
 	
 	public void resetPlayer() {

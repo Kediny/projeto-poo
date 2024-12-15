@@ -38,6 +38,7 @@ public class Princess extends GameObject implements ImageTile, Interactible {
     	String name = ImageGUI.getInstance().askUser(win);
     	String time = engine.convertTicksToTime(ticks);
     	engine.bestTimes(time, name);
-    	engine.resetGame();
+    	engine.printBestTimes();
+        ImageGUI.getInstance().dispose();
     }
 }
