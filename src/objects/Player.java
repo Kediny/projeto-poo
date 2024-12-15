@@ -138,7 +138,6 @@ public class Player extends GameObject implements ImageTile {
 	        ImageGUI.getInstance().addImage(bomb);
 	        setHasBomb(false);
 	        bombDropped = true;
-	        System.out.println(bombDropped);
 	    }
 	}
 	

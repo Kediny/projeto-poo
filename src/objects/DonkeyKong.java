@@ -92,6 +92,7 @@ public class DonkeyKong extends GameObject implements ImageTile, Interactible {
         if (Player.getInstance().getPosition() != null && Player.getInstance().getPosition().equals(newPosition)) {
             this.interaction();
         }
+        
         if (!newPosition.equals(position) && !Room.getInstance().isDoor(newPosition) && !Room.getInstance().isPrincess(newPosition)){
             position = newPosition;
         }

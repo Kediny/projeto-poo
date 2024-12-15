@@ -53,21 +53,22 @@ public class Bomb implements ImageTile, Interactible {
     
     public void explode() {
         Room room = Room.getInstance();
+        ArrayList<Interactible> interactiblesCopy = new ArrayList<>(room.getInteractibles());
         for (int dx = -EXPLOSION_RADIUS; dx <= EXPLOSION_RADIUS; dx++) {
             for (int dy = -EXPLOSION_RADIUS; dy <= EXPLOSION_RADIUS; dy++) {
-                Point2D targetPos = position.plus(dx, dy);
-                for (Interactible interactible : room.getInteractibles()) {
-                    if (interactible instanceof Wall || interactible instanceof Stairs) continue;
+            	Point2D targetPos = position.plus(dx, dy);
+            	if (targetPos.equals(Player.getInstance().getPosition())) {
+            		Player.getInstance().loseLife();
+            	}
+                for (Interactible interactible : interactiblesCopy) {
                     if (interactible.getPosition().equals(targetPos)) {
-                        if (interactible instanceof Player) {
-                            Player.getInstance().takeDamage(1);
-                        } else {
-                            room.removeInteractible(interactible);
-                        }
+                    	room.getInteractibles().remove(interactible);
+                    	ImageGUI.getInstance().removeImage((ImageTile) interactible);
                     }
                 }
             }
         }
+        interactiblesCopy = null;
         room.removeInteractible(this);
         ImageGUI.getInstance().removeImage(this);
     }

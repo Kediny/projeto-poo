@@ -7,4 +7,5 @@ public interface Interactible {
 	public void interaction();
 	
 	Point2D getPosition();
+	
 }

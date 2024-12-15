@@ -1,5 +1,6 @@
 package objects;
 
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -93,6 +94,8 @@ public class Bat extends GameObject implements ImageTile, Interactible {
         if (Player.getInstance().getPosition() != null && Player.getInstance().getPosition().equals(newPosition)) {
             this.interaction();
         }
+        
+        
         if (!Room.getInstance().isDoor(newPosition) && !newPosition.equals(position)) {
             position = newPosition;
         } else {

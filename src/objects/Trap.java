@@ -4,10 +4,8 @@ import pt.iscte.poo.game.Interactible;
 import pt.iscte.poo.game.Status;
 import pt.iscte.poo.gui.ImageTile;
 import pt.iscte.poo.utils.Point2D;
-import pt.iscte.poo.game.GameObject;
 
-
-public class Trap extends GameObject implements ImageTile, Interactible {
+public class Trap implements ImageTile, Interactible {
 	
 	private final Point2D position;
 
@@ -32,7 +30,6 @@ public class Trap extends GameObject implements ImageTile, Interactible {
     
     @Override
     public void interaction() {
-		Status.getInstance().setDirtyFlag(false);
     	Player player = Player.getInstance();
     	player.takeDamage(1);
 		Status.getInstance().setDirtyFlag(true);

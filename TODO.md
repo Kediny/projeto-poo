@@ -6,12 +6,11 @@ fix
 ?? phantom enemies
 ?? accumulating time
 ?? wrong stats
-? bombs
-?? explosions not working
-?? player being infinitely damaged on interaction
 ? superman jump
 
 done
+x explosions not working
+x player being infinitely damaged on bomb explosion
 x hidden traps
 x room load. missing line: warns user, aborts game using dispose()
 x room load. file not found, requests name on console

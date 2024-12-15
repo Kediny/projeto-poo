@@ -163,7 +163,7 @@ public class Room {
                 break;
             case 't':
                 Trap trap = new Trap(position);
-                ImageGUI.getInstance().addImage(new Trap(position));
+                ImageGUI.getInstance().addImage(trap);
                 interactibles.add(trap);
                 break;
             case 'h':

@@ -70,7 +70,7 @@ public class GameEngine implements Observer {
 	private void processTick() {
 		Room.getInstance().tick();
 		lastTickProcessed++;
-//		System.out.println("Tic Tac : " + lastTickProcessed);
+		System.out.println("Tic Tac : " + lastTickProcessed);
 		Movement.applyGravity(currentRoom.getPlayer());
 	}
 

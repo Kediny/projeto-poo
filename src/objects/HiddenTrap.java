@@ -1,6 +1,7 @@
 package objects;
 
 import pt.iscte.poo.game.Interactible;
+import pt.iscte.poo.game.Room;
 import pt.iscte.poo.game.Status;
 import pt.iscte.poo.gui.ImageGUI;
 import pt.iscte.poo.gui.ImageTile;
@@ -33,12 +34,13 @@ private final Point2D position;
     
     @Override
     public void interaction() {
-Status.getInstance().setDirtyFlag(false);
-    Player player = Player.getInstance();
-    ImageGUI.getInstance().removeImage(this);
-    Trap trap = new Trap(position);
-    ImageGUI.getInstance().addImage(trap);
-    player.takeDamage(1);
-Status.getInstance().setDirtyFlag(true);
+	    Player player = Player.getInstance();
+	    ImageGUI.getInstance().removeImage(this);
+	    Trap trap = new Trap(position);
+	    ImageGUI.getInstance().addImage(trap);
+	    Room.getInstance().addInteractible(trap);
+	    player.takeDamage(1);
+		Status.getInstance().setDirtyFlag(true);
     }
+    
 }
