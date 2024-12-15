@@ -1,14 +1,10 @@
 # TO-DO
 
-fix
-? reset
-?? enemies not loading
-?? phantom enemies
-?? accumulating time
-?? wrong stats
-? superman jump
+missing
+- bomb doesn't explode if enemies collide with it
 
 done
+x superman jump
 x explosions not working
 x player being infinitely damaged on bomb explosion
 x hidden traps

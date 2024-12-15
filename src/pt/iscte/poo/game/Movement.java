@@ -20,7 +20,7 @@ public class Movement {
     }
     
     public static void movePlayer(Direction dir) {
-		Point2D currentPosition = Room.getInstance().getPlayer().getPosition();
+		Point2D currentPosition = Player.getInstance().getPosition();
 		Point2D futurePosition = Movement.tryMove(currentPosition, dir);
 		Room currentRoom = Room.getInstance();
 
@@ -28,6 +28,11 @@ public class Movement {
 	        currentRoom.nextRoom(futurePosition);
 	        return;
 	    }
+	    
+	    Vector2D v = new Vector2D(0,1);
+	    Point2D below = Player.getInstance().getPosition().plus(v);
+	    if (dir.toString() == "UP" && !(Room.getInstance().isStairs(below) || Room.getInstance().isWall(below)))
+	    	return;
 
 		if (!futurePosition.equals(currentPosition)) {
 			currentRoom.getPlayer().setPosition(futurePosition);
