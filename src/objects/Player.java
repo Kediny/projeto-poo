@@ -1,5 +1,6 @@
 package objects;
 
+import pt.iscte.poo.game.Interactible;
 import pt.iscte.poo.gui.ImageTile;
 import pt.iscte.poo.gui.ImageGUI;
 import pt.iscte.poo.utils.Point2D;
@@ -17,6 +18,8 @@ public class Player extends GameObject implements ImageTile {
 	private int fullHealth = 3;
     private boolean hasSword = false;
     private boolean hasBomb = false;
+    public boolean hadBomb = false;
+    public boolean bombDropped = false;
     private Status currentStatus;
     private static Player instance;
 	
@@ -56,6 +59,7 @@ public class Player extends GameObject implements ImageTile {
     public void setHasBomb(boolean hasBomb) {
         this.hasBomb = hasBomb;
         currentStatus.setDirtyFlag(true);
+        if(hasBomb) hadBomb=true;
     }
 
     public boolean getHasSword() {
@@ -116,18 +120,25 @@ public class Player extends GameObject implements ImageTile {
         }
     }
    
-	public void update() {
-	    ImageGUI.getInstance().removeImage(this);
-	    ImageGUI.getInstance().addImage(this);
-	}
+    public void update() {
+        ImageGUI.getInstance().removeImage(this);
+        ImageGUI.getInstance().addImage(this);
+        for (Interactible interactible : Room.getInstance().getInteractibles()) {
+            if (interactible instanceof Bomb && interactible.getPosition().equals(position)) {
+                ((Bomb) interactible).explode();
+            }
+        }
+    }
 
-	public void placeBomb() {
+
+	public void placeBomb(){
 	    if (hasBomb) {
 	        Bomb bomb = new Bomb(position);
 	        Room.getInstance().addInteractible(bomb);
 	        ImageGUI.getInstance().addImage(bomb);
-	        bomb.tick();
 	        setHasBomb(false);
+	        bombDropped = true;
+	        System.out.println(bombDropped);
 	    }
 	}
 	

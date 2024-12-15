@@ -223,8 +223,12 @@ public class Room {
             if (interactible instanceof Banana) {
                 Banana banana = (Banana) interactible;
                 banana.applyGravity();
+            } else if (interactible instanceof Bomb) {
+                Bomb bomb = (Bomb) interactible;
+                bomb.tick();
             }
-        }
+        } 
+        
     }
 
     private void updateGoodMeatToBadMeat() {
