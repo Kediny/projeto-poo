@@ -49,7 +49,7 @@ public class Banana extends GameObject implements ImageTile, Interactible {
         	ImageGUI.getInstance().removeImage(this);
         }
         Player player = Player.getInstance();
-        if (player.getPosition().equals(position)) {
+        if (player.getPosition() != null && player.getPosition().equals(position)) {
             interaction();
         }
     }

@@ -6,6 +6,8 @@ import pt.iscte.poo.utils.Point2D;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
 import java.util.ArrayList;
 
 public class Room {
@@ -91,6 +93,12 @@ public class Room {
                 processLine(line, row++);
                 line = reader.readLine();
             }
+            
+            if (row <= MAX_Y) {
+                System.out.println("Error: Missing expected line in room file. Aborting game...");
+                ImageGUI.getInstance().dispose();
+                System.exit(1);
+            }
 
             heroStartingPosition = findSpawnPoint();
             player = Player.getInstance();
@@ -98,12 +106,25 @@ public class Room {
             ImageGUI.getInstance().addImage(player);
             roomTickCounter = 0;
 
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found: " + fileName);
+            System.out.print("Please enter a valid room file name: ");
+            Scanner sc = new Scanner(System.in);
+            String newFileName = sc.nextLine();
+            loadRoom(newFileName);
+            sc.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
+
     }
 
     private void processLine(String line, int row) {
+    	if (line.isEmpty()) {
+            System.out.println("Error: Line " + row + " in the room file is empty. Aborting game...");
+            ImageGUI.getInstance().dispose();
+            System.exit(1);
+        }
         for (int col = 0; col < line.length(); col++) {
             roomGrid[row][col] = line.charAt(col);
             Point2D position = new Point2D(col, row);
@@ -160,7 +181,9 @@ public class Room {
                 ImageGUI.getInstance().addImage(princess);
                 interactibles.add(princess);
                 break;
-            default: System.out.println("Unknown tile: " + tile);
+            default:
+            	System.out.println("Warning: Unrecognized tile '" + tile + "' at position (" + position.getX() + ", " + position.getY() + "). Defaulting to Floor tile.");
+                ImageGUI.getInstance().addImage(new Floor(position));
         }
     }
 
