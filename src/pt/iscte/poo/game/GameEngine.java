@@ -37,6 +37,7 @@ public class GameEngine implements Observer {
 	public void resetGame() {
 		Player.getInstance().resetPlayer();
 		ImageGUI.getInstance().clearImages();
+		Room.getInstance().getInteractibles().clear();
 		Room.killInstance();
 		Room.getInstance();
 		lastTickProcessed = 0;
@@ -145,8 +146,6 @@ public class GameEngine implements Observer {
 
 	    return (minutes * 60 * 1000) + (seconds * 1000) + milliseconds;
 	}
-
-
 	
 	public int getTickCounter() {
 		return lastTickProcessed;

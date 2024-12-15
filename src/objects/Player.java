@@ -90,10 +90,14 @@ public class Player extends GameObject implements ImageTile {
     // Functions
     @Override
     public void takeDamage(int damage) {
-    	if (health >= damage)
-    		health -= damage;
-    	if (health <= 0 || health <= damage) loseLife();
+    	health -= damage;
+    	if (health <= 0) loseLife();
     	currentStatus.setDirtyFlag(true);
+    }
+    
+    @Override
+    public boolean isAlive() {
+    	return lives > 0;
     }
 
     public void loseLife() {
@@ -111,11 +115,7 @@ public class Player extends GameObject implements ImageTile {
         	loseGame();
         }
     }
-    
-    public boolean isAlive() {
-    	return lives > 0;
-    }
-    
+   
 	public void update() {
 	    ImageGUI.getInstance().removeImage(this);
 	    ImageGUI.getInstance().addImage(this);

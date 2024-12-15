@@ -12,6 +12,7 @@ public class Bomb implements ImageTile, Interactible {
 	private int timer; // Timer in ticks before the bomb explodes
 	private static final int EXPLOSION_RADIUS = 1;
     private Player player;
+    public boolean hasBeenPickedUp=false;
 
     public Bomb(Point2D position) {
         this.position = position;
@@ -37,8 +38,13 @@ public class Bomb implements ImageTile, Interactible {
     public void interaction() {
     	player = Player.getInstance(); 
     	player.setHasBomb(true);
+    	hasBeenPickedUp=true;
     	ImageGUI.getInstance().removeImage(this);
     	Room.getInstance().removeInteractible(this);
+    }
+    
+    public boolean hasBeenPickedUp() {
+    	return hasBeenPickedUp;
     }
 
     public boolean tick() {
